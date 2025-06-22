@@ -1,0 +1,12 @@
+name: ValoracionPeninsulaYucatan
+title: ValoracionPeninsulaYucatan
+username: marco-vsquez
+account: marco-vsquez
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14249708
+bundleId: 9945731
+url: https://marco-vsquez.shinyapps.io/ValoracionPeninsulaYucatan/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

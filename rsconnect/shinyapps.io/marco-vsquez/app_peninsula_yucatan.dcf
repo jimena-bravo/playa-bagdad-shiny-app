@@ -1,0 +1,12 @@
+name: app_peninsula_yucatan
+title: app_peninsula_yucatan
+username: marco-vsquez
+account: marco-vsquez
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14208646
+bundleId: 10113538
+url: https://marco-vsquez.shinyapps.io/app_peninsula_yucatan/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

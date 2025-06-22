@@ -1,0 +1,174 @@
+div.outer {
+  position: fixed;
+  top: 41px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+#controls {
+  /* Appearance */
+  background-color: white;
+  padding: 20px 20px 20px 20px;
+  cursor: move;
+  /* Fade out while not hovering */
+  opacity: 0.65;
+  zoom: 0.9;
+  transition: opacity 500ms 1s;
+}
+
+div.outer2 {
+  position: fixed;
+  top: 41px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+#controls2 {
+  /* Appearance */
+  background-color: white;
+  padding: 0 20px 20px 20px;
+  cursor: move;
+  /* Fade out while not hovering */
+  opacity: 0.65;
+  zoom: 0.9;
+  transition: opacity 500ms 1s;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 16;
+  line-height: 1.6;
+}
+
+ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+ul li {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/*
+.context-panel {
+  background-color: #f0f0f0; 
+  padding: 20px;  
+  border-radius: 5px; 
+  width: 100%; 
+  box-sizing: border-box; 
+  margin: 0; 
+}
+*/
+
+#header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #ddd;
+}
+#logo {
+  height: 50px;  /* Ajusta el tamaño del logo */
+  margin-right: 50px;
+}
+#map {
+  position: absolute;
+  top: 70px;  /* Ajuste para que no tape el título */
+  bottom: 0;
+  width: 100%;
+}
+
+/* Estilos para la pestaña del dashboard de la app*/
+.dashboard-bosque {
+  background-color: #e9f5e1 !important;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.titulo-dashboard-bosque {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.value-box {
+  border-radius: 15px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  background-color: #a5d6a7 !important;
+  color: #1b5e20 !important;
+}
+
+.value-box .small-box {
+  background-color: transparent !important;
+}
+
+.box {
+  border-radius: 15px;
+  border: none;
+  background-color: #c8e6c9 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.box .box-title {
+  font-weight: bold;
+  font-size: 16px;
+  color: #1b5e20;
+}
+
+.leaflet-container {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+
+.selectize-input {
+  background-color: #eaf5ea;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #2e7d32;
+}
+
+.selectize-dropdown {
+  background-color: #f0fff0;
+  border-color: #4CAF50;
+}
+
+
+.select-materia .selectize-control.single {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.select-materia .selectize-input {
+  font-size: 18px !important;
+  padding: 12px !important;
+  border-radius: 8px !important;
+  border: 2px solid #2e5f2e !important;
+  background-color: #f4fff4 !important;
+}
+
+.select-materia label {
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  color: #2e5f2e;
+}
+
