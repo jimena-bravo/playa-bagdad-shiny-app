@@ -1,21 +1,18 @@
 # Workflow Colaborativo - Playa Bagdad Shiny App
 
-## 🎯 Objetivo
-Trabajar en paralelo con 3 personas en diferentes módulos sin conflictos de código.
-
 ## 📋 Módulos de Trabajo
 
-### Persona 1: SpaceX Instalaciones
+### Jimea: SpaceX Instalaciones
 - **Archivos a modificar**: `ui.R`, `server.R`, `www/google_maps.js`
 - **Funcionalidad**: Agregar puntos de instalaciones SpaceX + radio 5km
 - **Pestaña**: "Google Maps - Lugares"
 
-### Persona 2: Capas Ambientales  
+### Nas: Capas Ambientales  
 - **Archivos a modificar**: `ui.R`, `server.R`, `www/google_maps.js`, `global.R`
 - **Funcionalidad**: Mantos acuíferos, nidos tortugas, corrientes, centros conservación
 - **Pestaña**: "Google Maps - Lugares"
 
-### Persona 3: Dashboard Estadísticas
+### Luis: Dashboard Estadísticas
 - **Archivos a modificar**: `ui.R`, `server.R`, crear nuevos archivos
 - **Funcionalidad**: Tablas, gráficas y estadísticas rápidas
 - **Pestaña**: Nueva pestaña "Dashboard"
