@@ -2,7 +2,7 @@
 
 ## 📋 Módulos de Trabajo
 
-### Jimea: SpaceX Instalaciones
+### Jime: SpaceX Instalaciones
 - **Archivos a modificar**: `ui.R`, `server.R`, `www/google_maps.js`
 - **Funcionalidad**: Agregar puntos de instalaciones SpaceX + radio 5km
 - **Pestaña**: "Google Maps - Lugares"
