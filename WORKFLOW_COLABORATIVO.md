@@ -121,11 +121,6 @@ git add .
 git commit -m "Resolve merge conflicts"
 ```
 
-## 📞 Contacto
-- **Coordinador**: [Tu nombre]
-- **Canal de comunicación**: [Slack/Discord/Teams]
-- **Reuniones**: [Horario y frecuencia]
-
 ## ✅ Checklist de Finalización
 
 ### Antes de crear Pull Request:
