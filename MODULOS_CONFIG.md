@@ -3,8 +3,7 @@
 ## 🎯 División de Trabajo por Módulos
 
 ### Módulo 1: SpaceX Instalaciones
-**Responsable**: [Nombre Persona 1]
-
+**Responsable**: Jime
 #### Archivos a Modificar:
 - `ui.R` - Líneas específicas para controles SpaceX
 - `server.R` - Lógica de SpaceX
@@ -35,7 +34,7 @@ observeEvent(input$show_spacex_installations, {
 ```
 
 ### Módulo 2: Capas Ambientales
-**Responsable**: [Nombre Persona 2]
+**Responsable**: Nas
 
 #### Archivos a Modificar:
 - `ui.R` - Controles para capas ambientales
@@ -75,7 +74,7 @@ load("datos/ambiental/conservacion.RData")
 ```
 
 ### Módulo 3: Dashboard Estadísticas
-**Responsable**: [Nombre Persona 3]
+**Responsable**: Luis
 
 #### Archivos a Modificar:
 - `ui.R` - Nueva pestaña dashboard
@@ -116,10 +115,9 @@ output$dashboard_stats <- renderUI({
 - `server.R` - Solo en las secciones marcadas con comentarios
 - `global.R` - Solo en las secciones marcadas con comentarios
 
-### Archivos Intocables:
+### Archivos que no hay que modificar:
 - `renv.lock` - Solo modificar si hay cambios de dependencias
 - `google_maps_config.R` - Solo modificar configuración de API
-- `WORKFLOW_COLABORATIVO.md` - Solo el coordinador
 
 ## 📋 Checklist de Inicio para Cada Persona
 
@@ -144,7 +142,7 @@ output$dashboard_stats <- renderUI({
 
 ## 🔧 Comandos Específicos por Módulo
 
-### Para Persona 1 (SpaceX):
+### SpaceX:
 ```bash
 git checkout feature/spacex-instalaciones
 # Trabajar en archivos específicos
@@ -152,7 +150,7 @@ git add ui.R server.R www/google_maps.js
 git commit -m "Agregar funcionalidad SpaceX"
 ```
 
-### Para Persona 2 (Ambiental):
+### Capas Ambientales:
 ```bash
 git checkout feature/capas-ambientales
 # Trabajar en archivos específicos
@@ -160,27 +158,10 @@ git add ui.R server.R global.R www/google_maps.js
 git commit -m "Agregar capas ambientales"
 ```
 
-### Para Persona 3 (Dashboard):
+### Dashboard:
 ```bash
 git checkout feature/estadisticas-dashboard
 # Trabajar en archivos específicos
 git add ui.R server.R www/dashboard.js www/dashboard.css
 git commit -m "Agregar dashboard estadísticas"
 ```
-
-## 📞 Protocolo de Comunicación
-
-### Daily Standup (5 min):
-- ¿Qué hice ayer?
-- ¿Qué haré hoy?
-- ¿Hay bloqueos?
-
-### Weekly Review:
-- Revisar progreso
-- Identificar conflictos
-- Planificar siguiente semana
-
-### Emergencias:
-- Contactar coordinador inmediatamente
-- No hacer merge sin autorización
-- Documentar problema 
