@@ -6,10 +6,43 @@ library(janitor)
 library(shinythemes)
 library(scales)
 library(leaflet)
+library(shinyjs)
 
 options(digits=10)
   
 server <- function(input, output, session) {
+
+  # Función para cargar datos pesados solo cuando se necesiten
+  load_heavy_data <- function(data_name) {
+    if (is.null(get(data_name, envir = .GlobalEnv))) {
+      load(paste0("datos/", data_name, ".RData"), envir = .GlobalEnv)
+      
+      # Procesar datos solo cuando se cargan por primera vez
+      if (data_name == "sanciones") {
+        sanciones <<- sanciones %>%
+          mutate(
+            fecha_orden_inicio_mes = floor_date(fecha_orden, "month"),
+            fecha_orden_inicio_mes_txt = format(fecha_orden_inicio_mes, "%Y-%m"),
+            mes_anio = format(fecha_orden, "%Y-%m")
+          )
+      }
+      
+      if (data_name == "multas") {
+        multas$anio_orden <<- format(as.Date(multas$fecha_de_visita), "%Y")
+      }
+      
+      if (data_name == "shapes_mexico") {
+        # Crear los dataframe de agem y agee para hacer joins
+        df_agee <<- agee %>% as.data.frame() %>% .[-4]
+        df_agem <<- agem %>% as.data.frame() %>% .[-5]
+        
+        df_agee$NOMGEO <<- homologacion_basica(df_agee$NOMGEO)
+        df_agem$NOMGEO <<- homologacion_basica(df_agem$NOMGEO)
+        df_agem$cve_ent_nom_mun <<- paste0(df_agem$CVE_ENT, " - ", df_agem$NOMGEO)
+      }
+    }
+    return(get(data_name, envir = .GlobalEnv))
+  }
 
   # Elementos del mapa interactivo de órdenes de inspección ------
 
@@ -18,14 +51,17 @@ server <- function(input, output, session) {
     req(input$filtro_fecha)
     req(input$rango_fechas)
     
+    # Cargar datos de sanciones solo cuando se necesiten
+    sanciones_data <- load_heavy_data("sanciones")
+    
     if(input$filtro_fecha == "Rango de fechas"){
-      datos_filtrados <- sanciones %>%
+      datos_filtrados <- sanciones_data %>%
         filter(
           fecha_orden >= input$rango_fechas[1] & 
             fecha_orden <= input$rango_fechas[2]
           )  
     } else {
-      datos_filtrados <- sanciones %>%
+      datos_filtrados <- sanciones_data %>%
         filter(mes_anio == input$mes)  
     }
     if(input$materia != "Todas"){
@@ -39,6 +75,10 @@ server <- function(input, output, session) {
   data_graf <- reactive({
     datos <- datos_filtrados()
     req(datos)
+    
+    # Cargar datos de shapes solo cuando se necesiten
+    shapes_data <- load_heavy_data("shapes_mexico")
+    
     datagraf <- datos %>% 
       count(cve_ent_nom_mun) %>% arrange(-n)
     datagraf %<>%
@@ -50,6 +90,64 @@ server <- function(input, output, session) {
     datagraf
   })
   
+  # Observer para la capa de Laguna Madre en Google Maps
+  observeEvent(input$show_lag_madre_gmap, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("toggleLagMadreLayer(%s);", tolower(input$show_lag_madre_gmap)))
+  }, ignoreNULL = FALSE) # ignoreNULL = FALSE para que se ejecute al inicio
+  
+  # Observer para la capa de Playa Bagdad en Google Maps
+  observeEvent(input$show_playa_bagdad_gmap, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglePlayaBagdadLayer(%s);", tolower(input$show_playa_bagdad_gmap)))
+  }, ignoreNULL = FALSE) # ignoreNULL = FALSE para que se ejecute al inicio
+  
+  # Observer para la capa Dv en Google Maps
+  observeEvent(input$show_dv_layer_gmap, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("toggleDvLayer(%s);", tolower(input$show_dv_layer_gmap)))
+  }, ignoreNULL = FALSE)
+  
+  # Observer para el clic en la capa Dv que crea la galería
+  observeEvent(input$dv_layer_clicked, {
+    # 1. Definir la UI de la galería de fotos
+    gallery_ui <- fluidPage(
+      h2("Galería de fotos del recorrido de la CONANP"),
+      p("Haga clic en una imagen para verla en tamaño completo."),
+      hr(),
+      fluidRow(
+        # Leer los archivos de la carpeta y crear la galería
+        lapply(list.files("fotos_conanp", pattern = "\\.jpeg$"), function(photo_file) {
+          column(3, class = "text-center", style = "margin-bottom: 20px;",
+            # La ruta de la imagen usa el resource path que definimos
+            tags$a(href = file.path("gallery_photos", photo_file),
+                   target = "_blank", # Abrir en una nueva pestaña del navegador
+                   tags$img(src = file.path("gallery_photos", photo_file),
+                            class = "img-fluid img-thumbnail",
+                            style = "height: 200px; object-fit: cover; cursor: pointer;")
+            )
+          )
+        })
+      )
+    )
+
+    # 2. Eliminar la pestaña si ya existe para evitar duplicados.
+    # Se usa try() para que no dé error si la pestaña no existe en el primer clic.
+    try(removeTab(inputId = "nav", target = "galeria_conanp"), silent = TRUE)
+
+    # 3. Insertar la nueva pestaña y seleccionarla
+    insertTab(
+      inputId = "nav",
+      tabPanel(
+        title = "Galería de fotos del recorrido de la CONANP",
+        value = "galeria_conanp",
+        gallery_ui
+      ),
+      target = "Google Maps - Lugares", # Se insertará después de esta pestaña
+      position = "after",
+      select = TRUE # Cambiar a la nueva pestaña inmediatamente
+    )
+  }, ignoreInit = TRUE)
   
   ## Capa base para el mapa interactivo -----
   output$mapa <- leaflet::renderLeaflet(
@@ -65,72 +163,141 @@ server <- function(input, output, session) {
       ) 
   )
   
-  ## Capas reactivas del mapa -------
+  ## Observers separados para cada capa del mapa -------
   
+  # Observer para Playa Bagdad
+  observeEvent(input$playa_bagdad, {
+    leafletProxy("mapa") %>%
+      clearGroup("Playa Bagdad") %>%
+      {if(input$playa_bagdad) {
+        addPolylines(., data = playa_bagdad, 
+                    weight = 1, color = "black", opacity = 1, group = "Playa Bagdad")
+      } else .}
+  })
   
-  observe({
-    
-    if(!is.null(input$playa_bagdad))         n_playa <- ifelse(input$playa_bagdad,nrow(playa_bagdad),0)
-    if(!is.null(input$lag_madre))            n_lagm  <- ifelse(input$lag_madre,nrow(lag_madre),0)
-    if(!is.null(input$municipios))           n_muns  <- ifelse(input$municipios,nrow(municipios),0)
-    if(!is.null(input$ageb_rural))           n_agebr <- ifelse(input$ageb_rural,nrow(ageb_rural),0)
-    if(!is.null(input$ageb_urbano))          n_agebu <- ifelse(input$ageb_urbano,nrow(ageb_urbano),0)
-    if(!is.null(input$localidad_amanzanada)) n_lmnz  <- ifelse(input$localidad_amanzanada,nrow(localidad_amanzanada),0)
-    if(!is.null(input$localidad_puntual))    n_lpunt <- ifelse(input$localidad_puntual,nrow(localidad_puntual),0)
-    if(!is.null(input$manzana))              n_mnz   <- ifelse(input$manzana,nrow(manzana),0)
-    if(!is.null(input$vialidad))             n_vial  <- ifelse(input$vialidad,nrow(vialidad),0)
-    
-    if(!is.null(input$puntos))             n_puntos  <- ifelse(input$puntos,nrow(puntos),0)
+  # Observer para Laguna Madre
+  observeEvent(input$lag_madre, {
+    leafletProxy("mapa") %>%
+      clearGroup("Laguna madre") %>%
+      {if(input$lag_madre) {
+        addPolygons(., data = lag_madre, 
+                   weight = 1, color = "black", opacity = 1, group = "Laguna madre")
+      } else .}
+  })
+  
+  # Observer para Municipios
+  observeEvent(input$municipios, {
+    if(input$municipios && is.null(municipios)) {
+      municipios <<- load_heavy_data("municipios")
+      n_muns <<- nrow(municipios)
+    }
     
     leafletProxy("mapa") %>%
-            clearShapes() %>%
-            addPolygons(data = playa_bagdad[0:n_playa,], 
-                        weight = 1, 
-                        color = "black",  
-                        opacity = 1,
-                        group = "Playa Bagdad") %>%
-      addPolygons(data = lag_madre[0:n_lagm,], 
-                  weight = 1, 
-                  color = "black",  
-                  opacity = 1,
-                  group = "Laguna madre") %>%
-      addPolygons(data = municipios[0:n_muns,], 
-                  weight = 1, 
-                  color = "black",  
-                  opacity = 1,
-                  group = "Municipios") %>%
-      addPolygons(data = ageb_rural[0:n_agebr,], 
-                  weight = 1, 
-                  color = "black",  
-                  opacity = 1,
-                  group = "AGEBS rural") %>%
-      addPolygons(data = ageb_urbano[0:n_agebu,], 
-                  weight = 1, 
-                  color = "black",  
-                  opacity = 1,
-                  group = "AGEBS urbano") %>%
-      addPolygons(data = localidad_amanzanada[0:n_lmnz,], 
-                  weight = 1, 
-                  color = "black",  
-                  opacity = 1,
-                  group = "Localidades amanzanadas") %>%
-      addCircleMarkers(data = localidad_puntual[0:n_lpunt,],
-                  stroke = FALSE, fillOpacity = 0.5,
-                  group = "Localidades puntuales")  %>%
-      addPolygons(data = manzana[0:n_mnz,], 
-                  weight = 1, 
-                  color = "black",  
-                  opacity = 1,
-                  group = "Manzanas") %>%
-      addPolygons(data = vialidad[0:n_vial,], 
-                  weight = 1, 
-                  color = "black",  
-                  opacity = 1,
-                  group = "Vialidad") %>%
-      addCircleMarkers(data = puntos[0:n_puntos,],
-                       stroke = FALSE, fillOpacity = 0.5,
-                  group = "Puntos")
+      clearGroup("Municipios") %>%
+      {if(input$municipios) {
+        addPolygons(., data = municipios, 
+                   weight = 1, color = "black", opacity = 1, group = "Municipios")
+      } else .}
+  })
+  
+  # Observer para AGEB Rural
+  observeEvent(input$ageb_rural, {
+    if(input$ageb_rural && is.null(ageb_rural)) {
+      ageb_rural <<- load_heavy_data("ageb_rural")
+      n_agebr <<- nrow(ageb_rural)
+    }
     
+    leafletProxy("mapa") %>%
+      clearGroup("AGEBS rural") %>%
+      {if(input$ageb_rural) {
+        addPolygons(., data = ageb_rural, 
+                   weight = 1, color = "black", opacity = 1, group = "AGEBS rural")
+      } else .}
+  })
+  
+  # Observer para AGEB Urbano
+  observeEvent(input$ageb_urbano, {
+    if(input$ageb_urbano && is.null(ageb_urbano)) {
+      ageb_urbano <<- load_heavy_data("ageb_urbano")
+      n_agebu <<- nrow(ageb_urbano)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("AGEBS urbano") %>%
+      {if(input$ageb_urbano) {
+        addPolygons(., data = ageb_urbano, 
+                   weight = 1, color = "black", opacity = 1, group = "AGEBS urbano")
+      } else .}
+  })
+  
+  # Observer para Localidades Amanzanadas
+  observeEvent(input$localidad_amanzanada, {
+    if(input$localidad_amanzanada && is.null(localidad_amanzanada)) {
+      localidad_amanzanada <<- load_heavy_data("localidad_amanzanada")
+      n_lmnz <<- nrow(localidad_amanzanada)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Localidades amanzanadas") %>%
+      {if(input$localidad_amanzanada) {
+        addPolygons(., data = localidad_amanzanada, 
+                   weight = 1, color = "black", opacity = 1, group = "Localidades amanzanadas")
+      } else .}
+  })
+  
+  # Observer para Localidades Puntuales
+  observeEvent(input$localidad_puntual, {
+    if(input$localidad_puntual && is.null(localidad_puntual)) {
+      localidad_puntual <<- load_heavy_data("localidad_puntual")
+      n_lpunt <<- nrow(localidad_puntual)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Localidades puntuales") %>%
+      {if(input$localidad_puntual) {
+        addCircleMarkers(., data = localidad_puntual,
+                        stroke = FALSE, fillOpacity = 0.5, group = "Localidades puntuales")
+      } else .}
+  })
+  
+  # Observer para Manzanas
+  observeEvent(input$manzana, {
+    if(input$manzana && is.null(manzana)) {
+      manzana <<- load_heavy_data("manzana")
+      n_mnz <<- nrow(manzana)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Manzanas") %>%
+      {if(input$manzana) {
+        addPolygons(., data = manzana, 
+                   weight = 1, color = "black", opacity = 1, group = "Manzanas")
+      } else .}
+  })
+  
+  # Observer para Vialidades
+  observeEvent(input$vialidad, {
+    if(input$vialidad && is.null(vialidad)) {
+      vialidad <<- load_heavy_data("vialidad")
+      n_vial <<- nrow(vialidad)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Vialidad") %>%
+      {if(input$vialidad) {
+        addPolygons(., data = vialidad, 
+                   weight = 1, color = "black", opacity = 1, group = "Vialidad")
+      } else .}
+  })
+  
+  # Observer para Puntos
+  observeEvent(input$puntos, {
+    leafletProxy("mapa") %>%
+      clearGroup("Puntos") %>%
+      {if(input$puntos) {
+        addCircleMarkers(., data = puntos,
+                        stroke = FALSE, fillOpacity = 0.5, group = "Puntos")
+      } else .}
   })
   
   # observe({

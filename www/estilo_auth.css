@@ -1,6 +1,6 @@
 /* Fondo completo para la pantalla de login */
 body {
-    background-image: url("Jaguar.jpg");
+    background-image: url("bagdad.jpeg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -33,5 +33,9 @@ body {
   .btn-primary:hover {
     background-color: #3e6f3e;
     border-color: #3e6f3e;
+  }
+  
+  .shinymanager-page {
+    background-image: url("bagdad.jpeg");
   }
   
