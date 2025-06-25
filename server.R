@@ -108,6 +108,50 @@ server <- function(input, output, session) {
     shinyjs::runjs(sprintf("toggleDvLayer(%s);", tolower(input$show_dv_layer_gmap)))
   }, ignoreNULL = FALSE)
   
+  # Observer para la capa aicas en Google Maps
+  observeEvent(input$show_aicas, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("toggleaicasLayer(%s);", tolower(input$show_aicas)))
+  }, ignoreNULL = FALSE)
+  
+  # Observer para la capa sistema arrecifal en Google Maps
+  observeEvent(input$show_sist_arrecifal, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglesistema_arrecifal_tamaulipasLayer(%s);", tolower(input$show_sist_arrecifal)))
+  }, ignoreNULL = FALSE)
+  
+  # Observer para la capa rtp en Google Maps
+  observeEvent(input$show_rtp, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglertpLayer(%s);", tolower(input$show_rtp)))
+  }, ignoreNULL = FALSE)
+  
+  
+  # Observer para la capa rmp en Google Maps
+  observeEvent(input$show_rmp, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglermpLayer(%s);", tolower(input$show_rmp)))
+  }, ignoreNULL = FALSE)
+ 
+  # Observer para la capa sapcb en Google Maps
+  observeEvent(input$show_sapcb, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglesapcbLayer(%s);", tolower(input$show_sapcb)))
+  }, ignoreNULL = FALSE) 
+  
+  # Observer para la capa lm ramsar en Google Maps
+  observeEvent(input$show_lm_ramsar, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglelmramsarLayer(%s);", tolower(input$show_lm_ramsar)))
+  }, ignoreNULL = FALSE) 
+  
+  # Observer para la capa rn ramsar en Google Maps
+  observeEvent(input$show_rn_ramsar, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglernramsarLayer(%s);", tolower(input$show_rn_ramsar)))
+  }, ignoreNULL = FALSE) 
+  
+
   # Observer para el clic en la capa Dv que crea la galería
   observeEvent(input$dv_layer_clicked, {
     # 1. Definir la UI de la galería de fotos
@@ -299,6 +343,114 @@ server <- function(input, output, session) {
                         stroke = FALSE, fillOpacity = 0.5, group = "Puntos")
       } else .}
   })
+  
+  # Observer para aicas
+  observeEvent(input$aicas, {
+    if(input$aicas && is.null(aicas)) {
+      aicas <<- load_heavy_data("aicas")
+      n_aicas <<- nrow(aicas)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Áreas de Importancia para la Conservación de las Aves") %>%
+      {if(input$aicas) {
+        addPolygons(., data = aicas, 
+                    weight = 1, color = "black", opacity = 1, group = "Áreas de Importancia para la Conservación de las Aves")
+      } else .}
+  }) 
+
+  # Observer para Sistema Arrecifal Artificial
+  observeEvent(input$sistema_arrecifal_tamaulipas, {
+    if(input$sistema_arrecifal_tamaulipas && is.null(sistema_arrecifal_tamaulipas)) {
+      sistema_arrecifal_tamaulipas <<- load_heavy_data("sistema_arrecifal_tamaulipa")
+      n_sat <<- nrow(sistema_arrecifal_tamaulipas)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Sistema Arrecifal Artificial") %>%
+      {if(input$sistema_arrecifal_tamaulipas) {
+        addPolygons(., data = sistema_arrecifal_tamaulipas, 
+                    weight = 1, color = "black", opacity = 1, group = "Sistema Arrecifal Artificial")
+      } else .}
+  }) 
+  
+  # Observer para Regiones Terrestres Prioritarias
+  observeEvent(input$rtp, {
+    if(input$rtp && is.null(rtp)) {
+      rtp <<- load_heavy_data("rtp")
+      n_rtp <<- nrow(rtp)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Regiones Terrestres Prioritarias") %>%
+      {if(input$rtp) {
+        addPolygons(., data = rtp, 
+                    weight = 1, color = "black", opacity = 1, group = "Regiones Terrestres Prioritarias")
+      } else .}
+  }) 
+  
+  # Observer para Regiones Marinas Prioritarias
+  observeEvent(input$rmp, {
+    if(input$rmp && is.null(rmp)) {
+      rmp <<- load_heavy_data("rmp")
+      n_rmp <<- nrow(rmp)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Regiones Marinas Prioritarias") %>%
+      {if(input$rmp) {
+        addPolygons(., data = rmp, 
+                    weight = 1, color = "black", opacity = 1, group = "Regiones Marinas Prioritarias")
+      } else .}
+  }) 
+  
+  # # Observer para Sitios de Atención Prioritaria para la Conservación de la Biodiversidad
+  # observeEvent(input$sapcb, {
+  #   if(input$sapcb && is.null(sapcb)) {
+  #     sapcb <<- load_heavy_data("sapcb")
+  #     n_sapcb <<- nrow(sapcb)
+  #   }
+  #   
+  #   leafletProxy("mapa") %>%
+  #     clearGroup("Sitios de Atención Prioritaria para la Conservación de la Biodiversidad") %>%
+  #     {if(input$sapcb) {
+  #       addPolygons(., data = sapcb, 
+  #                   weight = 1, color = "black", opacity = 1, group = "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad")
+  #     } else .}
+  # }) 
+  # 
+  # 
+  # 
+  # # Observer para Sitio RAMSAR Laguna Madre
+  # observeEvent(input$lm_ramsar, {
+  #   if(input$lm_ramsar && is.null(lm_ramsar)) {
+  #     lm_ramsar <<- load_heavy_data("lm_ramsar")
+  #     n_lmramsar <<- nrow(lm_ramsar)
+  #   }
+  #   
+  #   leafletProxy("mapa") %>%
+  #     clearGroup("Sitio Ramsar Laguna Madre") %>%
+  #     {if(input$lm_ramsar) {
+  #       addPolygons(., data = lm_ramsar, 
+  #                   weight = 1, color = "black", opacity = 1, group = "Sitio Ramsar Laguna Madre")
+  #     } else .}
+  # }) 
+  # 
+  # 
+  # # Observer para Sitio RAMSAR Rancho Nuevo
+  # observeEvent(input$rn_ramsar, {
+  #   if(input$rn_ramsar && is.null(rn_ramsar)) {
+  #     rn_ramsar <<- load_heavy_data("rn_ramsar")
+  #     n_rnramsar <<- nrow(rn_ramsar)
+  #   }
+  #   
+  #   leafletProxy("mapa") %>%
+  #     clearGroup("Sitio Ramsar Rancho Nuevo") %>%
+  #     {if(input$rn_ramsar) {
+  #       addPolygons(., data = rn_ramsar, 
+  #                   weight = 1, color = "black", opacity = 1, group = "Sitio Ramsar Rancho Nuevo")
+  #     } else .}
+  # })
   
   # observe({
   #   pal <- colorNumeric(palette = colorRampPalette(c("white", "red"))(10), 

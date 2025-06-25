@@ -48,6 +48,18 @@ load("datos/lag_madre.RData")
 load("datos/puntos.RData")
 load("datos/dv_layer.RData")
 
+# === MÓDULO AMBIENTAL - INICIO ===
+# Carga de datos ambientales
+load("datos/Ambiental/aicas.RData")
+load("datos/Ambiental/sistema_arrecifal_tamaulipas.RData")
+load("datos/Ambiental/rtp.RData")
+load("datos/ambiental/rmp.RData")
+load("datos/ambiental/sapcb.RData")
+load("datos/ambiental/lm_ramsar.RData")
+load("datos/ambiental/rn_ramsar.RData")
+# === MÓDULO AMBIENTAL - FIN ===
+
+
 # Crear el objeto GeoJSON para la capa de Laguna Madre
 lag_madre_geojson <- geojsonio::geojson_json(lag_madre)
 
@@ -56,6 +68,28 @@ playa_bagdad_geojson <- geojsonio::geojson_json(playa_bagdad)
 
 # Crear el objeto GeoJSON para la capa de Dv
 dv_layer_geojson <- geojsonio::geojson_json(dv_layer)
+
+# Crear el objeto GeoJSON para la capa de Aicas
+aicas_layer_geojson <- geojsonio::geojson_json(aicas)
+
+# Crear el objeto GeoJSON para la capa de Sistema Arrecifal Artificial
+sistema_arrecifal_tamaulipas_layer_geojson <- geojsonio::geojson_json(sistema_arrecifal_tamaulipas)
+
+# Crear el objeto GeoJSON para la capa de Regiones Terrestres Prioritarias
+rtp_layer_geojson <- geojsonio::geojson_json(rtp)
+
+# Crear el objeto GeoJSON para la capa de Regiones Marinas Prioritarias
+rmp_layer_geojson <- geojsonio::geojson_json(rmp)
+
+# Crear el objeto GeoJSON para la capa de Sapcb
+sapcb_layer_geojson <- geojsonio::geojson_json(sapcb)
+
+# Crear el objeto GeoJSON para la capa de lm_ramsar
+lm_ramsar_layer_geojson <- geojsonio::geojson_json(lm_ramsar)
+
+# Crear el objeto GeoJSON para la capa de rn_ramsar
+rn_ramsar_layer_geojson <- geojsonio::geojson_json(rn_ramsar)
+
 
 # Registrar la carpeta de fotos para que Shiny pueda servir las imágenes
 addResourcePath("gallery_photos", "fotos_conanp")
@@ -97,6 +131,14 @@ n_lmnz <- 0
 n_lpunt <- 0
 n_mnz <- 0
 n_vial <- 0
+n_aicas <- 0
+n_sat <- 0
+n_rtp <- 0
+n_rmp <- 0
+n_sapcb <- 0
+n_lmramsar <- 0
+n_rnramsar <- 0
+
 
 # Crear los dataframe de agem y agee para hacer joins (solo cuando se carguen)
 df_agee <- NULL

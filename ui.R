@@ -67,7 +67,21 @@ ui_app <- fluidPage(
             # Datos GeoJSON para la capa de Playa Bagdad
             tags$script(id = "playa_bagdad_geojson", type = "application/json", playa_bagdad_geojson),
             # Datos GeoJSON para la capa Dv
-            tags$script(id = "dv_layer_geojson", type = "application/json", dv_layer_geojson)
+            tags$script(id = "dv_layer_geojson", type = "application/json", dv_layer_geojson),
+            # Datos GeoJSON para la capa aicas
+            tags$script(id = "aicas_layer_geojson", type = "application/json", aicas_layer_geojson),
+            # Datos GeoJSON para la capa sistema arrecifal tamaulipas
+            tags$script(id = "sistema_arrecifal_tamaulipas_layer_geojson", type = "application/json", sistema_arrecifal_tamaulipas_layer_geojson),
+            # Datos GeoJSON para la capa rtp
+            tags$script(id = "rtp_layer_geojson", type = "application/json", rtp_layer_geojson),
+            # Datos GeoJSON para la capa rmp
+            tags$script(id = "rmp_layer_geojson", type = "application/json", rmp_layer_geojson),
+            # Datos GeoJSON para la capa sapcb
+            tags$script(id = "sapcb_layer_geojson", type = "application/json", sapcb_layer_geojson),
+            # Datos GeoJSON para la capa lm_ramsar
+            tags$script(id = "lm_ramsar_layer_geojson", type = "application/json", lm_ramsar_layer_geojson),
+            # Datos GeoJSON para la capa rn_ramsar
+            tags$script(id = "rn_ramsar_layer_geojson", type = "application/json", rn_ramsar_layer_geojson),
           ),
 
           # Contenido de la primera pestaña ----
@@ -109,7 +123,18 @@ ui_app <- fluidPage(
                 h5("Detalle Urbano", style = "color: #34495e; font-size: 14px; margin-bottom: 10px; margin-top: 20px;"),
                 checkboxInput("manzana", label = "Manzanas", value = F),
                 checkboxInput("vialidad", label = "Vialidades", value = F),
-
+                
+                # Capas ambientales
+                h5("Capas Ambientales", style = "color: #34495e; font-size: 14px; margin-bottom: 10px; margin-top: 20px;"),
+                checkboxInput("aicas", label = "Áreas de Importancia para la Conservación de las Aves", value = F),
+                checkboxInput("sistema_arrecifal_tamaulipas", label = "Sistema Arrecifal Artificial Tamaulipas", value = F),
+                checkboxInput("rtp", label = "Regiones Terrestres Prioritarias", value = F),
+                checkboxInput("rmp", label = "Regiones Marinas Prioritarias", value = F),
+                checkboxInput("sapcb", label = "Sitios de Atención Prioritaria para la Conservacion de la Biodiversidad", value = F),
+                checkboxInput("lm_ramsar", label = "Sitio Ramsar Laguna Madre", value = F),
+                checkboxInput("rn_ramsar", label = "Sitio Ramsar Rancho Nuevo", value = F),
+                
+                
                 # Información sobre rendimiento
                 hr(),
                 div(style = "font-size: 12px; color: #7f8c8d;",
@@ -172,6 +197,29 @@ ui_app <- fluidPage(
                         column(2,
                                checkboxInput("show_lag_madre_gmap", "ANP Laguna Madre y Delta del Río Bravo", value = FALSE)
                         ),
+                        # === MÓDULO AMBIENTAL - INICIO ===
+                        column(2,
+                               checkboxInput("show_aicas", "Áreas de Importancia para la Conservación de las Aves", value = FALSE)
+                        ),
+                        column(2,
+                               checkboxInput("show_sist_arrecifal", "Sistema Arrecifal Artificial de Tamaulipas", value = FALSE)
+                        ),
+                        column(2,
+                               checkboxInput("show_rtp", "Regiones Terrestres Prioritarias", value = FALSE)
+                        ),
+                        column(2,
+                               checkboxInput("show_rmp", "Regiones Marinas Prioritarias", value = FALSE)
+                        ),
+                        column(2,
+                               checkboxInput("show_sapcb", "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad", value = FALSE)
+                        ),
+                        column(2,
+                               checkboxInput("show_lm_ramsar", "Sitio RAMSAR Laguna Madre", value = FALSE)
+                        ),
+                        column(2,
+                               checkboxInput("show_rn_ramsar", "Sitio RAMSAR Rancho Nuevo", value = FALSE)
+                        ),
+                        # === MÓDULO AMBIENTAL - FIN ===
                         column(2,
                                checkboxInput("show_playa_bagdad_gmap", "Playa Bagdad", value = FALSE)
                         ),

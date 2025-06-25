@@ -6,6 +6,13 @@ let markers = [];
 let lagMadreLayer;
 let playaBagdadLayer;
 let dvLayer;
+let aicasLayer;
+let sistema_arrecifal_tamaulipasLayer;
+let rtpLayer;
+let rmpLayer;
+let sapcbLayer;
+let lm_ramsarLayer;
+let rn_ramsarLayer;
 
 // Initialize Google Maps
 function initMap() {
@@ -93,6 +100,132 @@ function initMap() {
   } catch (e) {
     console.error("Error al cargar o procesar la capa GeoJSON de Dv:", e);
   }
+  
+  // Cargar y configurar la capa de aicas
+  try {
+    const geojsonScript = document.getElementById('aicas_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const aicasData = JSON.parse(geojsonScript.textContent);
+      aicasdLayer = new google.maps.Data();
+      aicasdLayer.addGeoJson(aicasData);
+      aicasdLayer.setStyle({
+        fillColor: '#0077b6', // Un azul distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#023e8a',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Áreas de Importancia para la Conservación de las Aves:", e);
+  }
+  
+   // Cargar y configurar la capa de sistema_arrecifal_tamaulipas
+  try {
+    const geojsonScript = document.getElementById('sistema_arrecifal_tamaulipas_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const sistema_arrecifal_tamaulipasData = JSON.parse(geojsonScript.textContent);
+      sistema_arrecifal_tamaulipasLayer = new google.maps.Data();
+      sistema_arrecifal_tamaulipasLayer.addGeoJson(sistema_arrecifal_tamaulipasData);
+      sistema_arrecifal_tamaulipasLayer.setStyle({
+        fillColor: '#ecb311', // Un amarillo distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#023e8a',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Sistema Arrecifal Artificial:", e);
+  } 
+  
+     // Cargar y configurar la capa de region terrestre prioritaria
+  try {
+    const geojsonScript = document.getElementById('rtp_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const rtpData = JSON.parse(geojsonScript.textContent);
+      rtpLayer = new google.maps.Data();
+      rtpLayer.addGeoJson(rtpData);
+      rtpLayer.setStyle({
+        fillColor: '#09c260', // Un verde distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#023e8a',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Regiones Terrestres Prioritarias:", e);
+  } 
+ 
+      // Cargar y configurar la capa de region marina prioritaria
+  try {
+    const geojsonScript = document.getElementById('rmp_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const rmpData = JSON.parse(geojsonScript.textContent);
+      rmpLayer = new google.maps.Data();
+      rmpLayer.addGeoJson(rmpData);
+      rmpLayer.setStyle({
+        fillColor: '#0925c2', // Un azul distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#023e8a',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Regiones Marinas Prioritarias:", e);
+  } 
+   
+       // Cargar y configurar la capa de Sitios de Atención Prioritaria para la Conservación de la Biodiversidad
+  try {
+    const geojsonScript = document.getElementById('sapcb_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const sapcbData = JSON.parse(geojsonScript.textContent);
+      sapcbLayer = new google.maps.Data();
+      sapcbLayer.addGeoJson(sapcbData);
+      sapcbLayer.setStyle({
+        fillColor: '#cf00a0', // Un morado distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#023e8a',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Atención Prioritaria para la Conservación de la Biodiversidad:", e);
+  }  
+  
+         // Cargar y configurar la capa de Sitio Ramsar Laguna Madre
+  try {
+    const geojsonScript = document.getElementById('lm_ramsar_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const lm_ramsarData = JSON.parse(geojsonScript.textContent);
+      lm_ramsarLayer = new google.maps.Data();
+      lm_ramsarLayer.addGeoJson(lm_ramsarData);
+      lm_ramsarLayer.setStyle({
+        fillColor: '#02a8c2', // Un azul distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#023e8a',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Sitio Ramsar Laguna Madre:", e);
+  }
+  
+           // Cargar y configurar la capa de Sitio Ramsar Rancho Nuevo
+  try {
+    const geojsonScript = document.getElementById('rn_ramsar_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const rn_ramsarData = JSON.parse(geojsonScript.textContent);
+      rn_ramsarLayer = new google.maps.Data();
+      rn_ramsarLayer.addGeoJson(rn_ramsarData);
+      rn_ramsarLayer.setStyle({
+        fillColor: '#0077b6', // Un azul distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#23a775',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Sitio Ramsar Rancho Nuevo:", e);
+  } 
 }
 
 // Función para mostrar/ocultar la capa de Laguna Madre
@@ -113,6 +246,55 @@ function togglePlayaBagdadLayer(show) {
 function toggleDvLayer(show) {
   if (dvLayer) {
     dvLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa aicas
+function toggleaicasLayer(show) {
+  if (aicasLayer) {
+    aicasLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa sistema_arrecifal_tamaulipas
+function togglesistema_arrecifal_tamaulipasLayer(show) {
+  if (sistema_arrecifal_tamaulipasLayer) {
+    sistema_arrecifal_tamaulipasLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa rtp
+function togglertpLayer(show) {
+  if (rtpLayer) {
+    rtpLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa rmp
+function togglermpLayer(show) {
+  if (rmpLayer) {
+    rmpLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa sapcb
+function togglesapcbLayer(show) {
+  if (sapcbLayer) {
+    sapcbLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa lm_ramsar
+function togglelmramsarLayer(show) {
+  if (lm_ramsarLayer) {
+    lm_ramsarLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa rn_ramsar
+function togglernramsarLayer(show) {
+  if (rn_ramsarLayer) {
+    rn_ramsarLayer.setMap(show ? map : null);
   }
 }
 
