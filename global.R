@@ -81,8 +81,8 @@ rtp_layer_geojson <- geojsonio::geojson_json(rtp)
 # Crear el objeto GeoJSON para la capa de Regiones Marinas Prioritarias
 rmp_layer_geojson <- geojsonio::geojson_json(rmp)
 
-# Crear el objeto GeoJSON para la capa de Sapcb
-sapcb_layer_geojson <- geojsonio::geojson_json(sapcb)
+# # Crear el objeto GeoJSON para la capa de Sapcb
+# sapcb_layer_geojson <- geojsonio::geojson_json(sapcb)
 
 # Crear el objeto GeoJSON para la capa de lm_ramsar
 lm_ramsar_layer_geojson <- geojsonio::geojson_json(lm_ramsar)
@@ -122,6 +122,7 @@ sanciones <- NULL
 multas <- NULL
 agee <- NULL
 agem <- NULL
+sapcb <- NULL
 
 # Variables auxiliares inicializadas como 0
 n_muns <- 0

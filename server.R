@@ -133,11 +133,11 @@ server <- function(input, output, session) {
     shinyjs::runjs(sprintf("togglermpLayer(%s);", tolower(input$show_rmp)))
   }, ignoreNULL = FALSE)
  
-  # Observer para la capa sapcb en Google Maps
-  observeEvent(input$show_sapcb, {
-    # Llama a la función de JS para mostrar/ocultar la capa
-    shinyjs::runjs(sprintf("togglesapcbLayer(%s);", tolower(input$show_sapcb)))
-  }, ignoreNULL = FALSE) 
+  # # Observer para la capa sapcb en Google Maps
+  # observeEvent(input$show_sapcb, {
+  #   # Llama a la función de JS para mostrar/ocultar la capa
+  #   shinyjs::runjs(sprintf("togglesapcbLayer(%s);", tolower(input$show_sapcb)))
+  # }, ignoreNULL = FALSE) 
   
   # Observer para la capa lm ramsar en Google Maps
   observeEvent(input$show_lm_ramsar, {
@@ -404,53 +404,53 @@ server <- function(input, output, session) {
       } else .}
   }) 
   
-  # # Observer para Sitios de Atención Prioritaria para la Conservación de la Biodiversidad
-  # observeEvent(input$sapcb, {
-  #   if(input$sapcb && is.null(sapcb)) {
-  #     sapcb <<- load_heavy_data("sapcb")
-  #     n_sapcb <<- nrow(sapcb)
-  #   }
-  #   
-  #   leafletProxy("mapa") %>%
-  #     clearGroup("Sitios de Atención Prioritaria para la Conservación de la Biodiversidad") %>%
-  #     {if(input$sapcb) {
-  #       addPolygons(., data = sapcb, 
-  #                   weight = 1, color = "black", opacity = 1, group = "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad")
-  #     } else .}
-  # }) 
-  # 
-  # 
-  # 
-  # # Observer para Sitio RAMSAR Laguna Madre
-  # observeEvent(input$lm_ramsar, {
-  #   if(input$lm_ramsar && is.null(lm_ramsar)) {
-  #     lm_ramsar <<- load_heavy_data("lm_ramsar")
-  #     n_lmramsar <<- nrow(lm_ramsar)
-  #   }
-  #   
-  #   leafletProxy("mapa") %>%
-  #     clearGroup("Sitio Ramsar Laguna Madre") %>%
-  #     {if(input$lm_ramsar) {
-  #       addPolygons(., data = lm_ramsar, 
-  #                   weight = 1, color = "black", opacity = 1, group = "Sitio Ramsar Laguna Madre")
-  #     } else .}
-  # }) 
-  # 
-  # 
-  # # Observer para Sitio RAMSAR Rancho Nuevo
-  # observeEvent(input$rn_ramsar, {
-  #   if(input$rn_ramsar && is.null(rn_ramsar)) {
-  #     rn_ramsar <<- load_heavy_data("rn_ramsar")
-  #     n_rnramsar <<- nrow(rn_ramsar)
-  #   }
-  #   
-  #   leafletProxy("mapa") %>%
-  #     clearGroup("Sitio Ramsar Rancho Nuevo") %>%
-  #     {if(input$rn_ramsar) {
-  #       addPolygons(., data = rn_ramsar, 
-  #                   weight = 1, color = "black", opacity = 1, group = "Sitio Ramsar Rancho Nuevo")
-  #     } else .}
-  # })
+  # Observer para Sitios de Atención Prioritaria para la Conservación de la Biodiversidad
+  observeEvent(input$sapcb, {
+    if(input$sapcb && is.null(sapcb)) {
+      sapcb <<- load_heavy_data("sapcb")
+      n_sapcb <<- nrow(sapcb)
+    }
+
+    leafletProxy("mapa") %>%
+      clearGroup("Sitios de Atención Prioritaria para la Conservación de la Biodiversidad") %>%
+      {if(input$sapcb) {
+        addPolygons(., data = sapcb,
+                    weight = 1, color = "black", opacity = 1, group = "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad")
+      } else .}
+  })
+
+
+
+  # Observer para Sitio RAMSAR Laguna Madre
+  observeEvent(input$lm_ramsar, {
+    if(input$lm_ramsar && is.null(lm_ramsar)) {
+      lm_ramsar <<- load_heavy_data("lm_ramsar")
+      n_lmramsar <<- nrow(lm_ramsar)
+    }
+
+    leafletProxy("mapa") %>%
+      clearGroup("Sitio Ramsar Laguna Madre") %>%
+      {if(input$lm_ramsar) {
+        addPolygons(., data = lm_ramsar,
+                    weight = 1, color = "black", opacity = 1, group = "Sitio Ramsar Laguna Madre")
+      } else .}
+  })
+
+
+  # Observer para Sitio RAMSAR Rancho Nuevo
+  observeEvent(input$rn_ramsar, {
+    if(input$rn_ramsar && is.null(rn_ramsar)) {
+      rn_ramsar <<- load_heavy_data("rn_ramsar")
+      n_rnramsar <<- nrow(rn_ramsar)
+    }
+
+    leafletProxy("mapa") %>%
+      clearGroup("Sitio Ramsar Rancho Nuevo") %>%
+      {if(input$rn_ramsar) {
+        addPolygons(., data = rn_ramsar,
+                    weight = 1, color = "black", opacity = 1, group = "Sitio Ramsar Rancho Nuevo")
+      } else .}
+  })
   
   # observe({
   #   pal <- colorNumeric(palette = colorRampPalette(c("white", "red"))(10), 
