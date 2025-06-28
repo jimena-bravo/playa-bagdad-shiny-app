@@ -76,8 +76,8 @@ ui_app <- fluidPage(
             tags$script(id = "rtp_layer_geojson", type = "application/json", rtp_layer_geojson),
             # Datos GeoJSON para la capa rmp
             tags$script(id = "rmp_layer_geojson", type = "application/json", rmp_layer_geojson),
-            # Datos GeoJSON para la capa sapcb
-            tags$script(id = "sapcb_layer_geojson", type = "application/json", sapcb_layer_geojson),
+            # # Datos GeoJSON para la capa sapcb
+            # tags$script(id = "sapcb_layer_geojson", type = "application/json", sapcb_layer_geojson),
             # Datos GeoJSON para la capa lm_ramsar
             tags$script(id = "lm_ramsar_layer_geojson", type = "application/json", lm_ramsar_layer_geojson),
             # Datos GeoJSON para la capa rn_ramsar
@@ -90,7 +90,7 @@ ui_app <- fluidPage(
           tabPanel(
             "Residuos Starship",
             sidebarLayout(
-              sidebarPanel(
+              sidebarPanel(style = "position: fixed; height: 90vh; width: 25%;  overflow-y: auto;",
                 width = 3,
 
                 # Agregar indicador de progreso
@@ -156,97 +156,152 @@ ui_app <- fluidPage(
             )
           ),
           
-          # Nueva pestaña para Google Maps
+          # Contenido de la primera pestaña ----
+          # La primera de las pestañas de la app será el mapa de la distribución de las sanciones
+          # Cada uno de los tabPanels define cada una de las pestañas
           tabPanel(
             "Google Maps - Lugares",
-            if (!is_google_maps_configured()) {
-              div(class = "container-fluid", style = "padding-top: 20px;",
-                  div(class = "alert alert-danger",
-                      h3("⚠️ Configuración de API Requerida"),
-                      p("Para activar el mapa de Google, necesitas una clave de API."),
-                      hr(),
-                      p("Sigue estos pasos para obtenerla y configurarla:"),
-                      tags$pre(GOOGLE_MAPS_SETUP_INSTRUCTIONS)
-                  )
+            sidebarLayout(
+              sidebarPanel(style = "position: fixed; height: 90vh; width: 25%;  overflow-y: auto;",
+                           width = 3,
+                           
+                           textInput("search_place", "Buscar lugar:",
+                                     placeholder = "Ej: escuelas, restaurantes, hospitales..."),
+                           selectInput("place_type", "Tipo de lugar:",
+                                       choices = GOOGLE_MAPS_CONFIG$place_types),
+                           numericInput("search_radius", "Radio (km):",
+                                         value = GOOGLE_MAPS_CONFIG$default_search_radius,
+                                         min = GOOGLE_MAPS_CONFIG$search_limits$min_radius,
+                                         max = GOOGLE_MAPS_CONFIG$search_limits$max_radius,
+                                         step = 1),
+                           actionButton("search_btn", "Buscar",
+                                        class = "btn btn-primary", style = "margin-top: 25px;"),
+                           checkboxInput("show_lag_madre_gmap", "ANP Laguna Madre y Delta del Río Bravo", value = FALSE),
+                           # === MÓDULO AMBIENTAL - INICIO ===
+                           checkboxInput("show_aicas", "Áreas de Importancia para la Conservación de las Aves", value = FALSE),
+                           checkboxInput("show_sist_arrecifal", "Sistema Arrecifal Artificial de Tamaulipas", value = FALSE),
+                           checkboxInput("show_rtp", "Regiones Terrestres Prioritarias", value = FALSE),
+                           checkboxInput("show_rmp", "Regiones Marinas Prioritarias", value = FALSE),
+                           checkboxInput("show_sapcb", "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad", value = FALSE),
+                           checkboxInput("show_lm_ramsar", "Sitio RAMSAR Laguna Madre", value = FALSE),
+                           checkboxInput("show_rn_ramsar", "Sitio RAMSAR Rancho Nuevo", value = FALSE),
+                           # === MÓDULO AMBIENTAL - FIN ===
+                           checkboxInput("show_playa_bagdad_gmap", "Playa Bagdad", value = FALSE),
+                           checkboxInput("show_dv_layer_gmap", "Recorrido CONANP (fotos)", value = FALSE),
+                           
+                           # Información sobre rendimiento
+                           hr(),
+                           div(style = "font-size: 12px; color: #7f8c8d;",
+                               p("💡 Tip: Las capas más pesadas (manzanas, vialidades) pueden tardar más en cargar."),
+                               p("✅ Los datos se cargan automáticamente cuando los necesitas.")
+                           )
+                           
+              ),
+              
+              mainPanel(
+                div(id='map-canvas',
+                    # style = "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);",
+                    style = "width: 100%; height: 90vh; margin: 0; padding: 0; position: relative;",
+                div(id = "google_map", 
+                    style = "width: 100%; height: 100%;",
+                    class = "google-maps-container")
               )
-            } else {
-              tagList(
-                fluidRow(
-                  column(12,
-                    div(class = "search-container",
-                      fluidRow(
-                        column(3,
-                          textInput("search_place", "Buscar lugar:",
-                                   placeholder = "Ej: escuelas, restaurantes, hospitales...")
-                        ),
-                        column(2,
-                          selectInput("place_type", "Tipo de lugar:",
-                                     choices = GOOGLE_MAPS_CONFIG$place_types)
-                        ),
-                        column(2,
-                          numericInput("search_radius", "Radio (km):",
-                                      value = GOOGLE_MAPS_CONFIG$default_search_radius,
-                                      min = GOOGLE_MAPS_CONFIG$search_limits$min_radius,
-                                      max = GOOGLE_MAPS_CONFIG$search_limits$max_radius,
-                                      step = 1)
-                        ),
-                        column(1,
-                          actionButton("search_btn", "Buscar",
-                                      class = "btn btn-primary", style = "margin-top: 25px;")
-                        ),
-                        column(2,
-                               checkboxInput("show_lag_madre_gmap", "ANP Laguna Madre y Delta del Río Bravo", value = FALSE)
-                        ),
-                        # === MÓDULO AMBIENTAL - INICIO ===
-                        column(2,
-                               checkboxInput("show_aicas", "Áreas de Importancia para la Conservación de las Aves", value = FALSE)
-                        ),
-                        column(2,
-                               checkboxInput("show_sist_arrecifal", "Sistema Arrecifal Artificial de Tamaulipas", value = FALSE)
-                        ),
-                        column(2,
-                               checkboxInput("show_rtp", "Regiones Terrestres Prioritarias", value = FALSE)
-                        ),
-                        column(2,
-                               checkboxInput("show_rmp", "Regiones Marinas Prioritarias", value = FALSE)
-                        ),
-                        column(2,
-                               checkboxInput("show_sapcb", "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad", value = FALSE)
-                        ),
-                        column(2,
-                               checkboxInput("show_lm_ramsar", "Sitio RAMSAR Laguna Madre", value = FALSE)
-                        ),
-                        column(2,
-                               checkboxInput("show_rn_ramsar", "Sitio RAMSAR Rancho Nuevo", value = FALSE)
-                        ),
-                        # === MÓDULO AMBIENTAL - FIN ===
-                        column(2,
-                               checkboxInput("show_playa_bagdad_gmap", "Playa Bagdad", value = FALSE)
-                        ),
-                        column(2,
-                               checkboxInput("show_dv_layer_gmap", "Recorrido CONANP (fotos)", value = FALSE)
-                        )
-                      )
-                    )
-                  )
-                ),
-                fluidRow(
-                  column(12,
-                    div(id = "google_map", class = "google-maps-container")
-                  )
-                ),
-                fluidRow(
-                  column(12,
-                    div(style = "margin-top: 15px;",
-                      h4("Lugares Encontrados"),
-                      div(id = "places_results",
-                          style = "max-height: 300px; overflow-y: auto; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);")
-                    )
-                  )
-                )
               )
-            }
-          )
+            )
+          ),
+          
+          
+          # Nueva pestaña para Google Maps
+          # tabPanel(
+          #   "Google Maps - Lugares",
+          #   if (!is_google_maps_configured()) {
+          #     div(class = "container-fluid", style = "padding-top: 20px;",
+          #         div(class = "alert alert-danger",
+          #             h3("⚠️ Configuración de API Requerida"),
+          #             p("Para activar el mapa de Google, necesitas una clave de API."),
+          #             hr(),
+          #             p("Sigue estos pasos para obtenerla y configurarla:"),
+          #             tags$pre(GOOGLE_MAPS_SETUP_INSTRUCTIONS)
+          #         )
+          #     )
+          #   } else {
+          #     tagList(
+          #       fluidRow(
+          #         column(12,
+          #           div(class = "search-container",
+          #             fluidRow(
+          #               column(3,
+          #                 textInput("search_place", "Buscar lugar:",
+          #                          placeholder = "Ej: escuelas, restaurantes, hospitales...")
+          #               ),
+          #               column(2,
+          #                 selectInput("place_type", "Tipo de lugar:",
+          #                            choices = GOOGLE_MAPS_CONFIG$place_types)
+          #               ),
+          #               column(2,
+          #                 numericInput("search_radius", "Radio (km):",
+          #                             value = GOOGLE_MAPS_CONFIG$default_search_radius,
+          #                             min = GOOGLE_MAPS_CONFIG$search_limits$min_radius,
+          #                             max = GOOGLE_MAPS_CONFIG$search_limits$max_radius,
+          #                             step = 1)
+          #               ),
+          #               column(1,
+          #                 actionButton("search_btn", "Buscar",
+          #                             class = "btn btn-primary", style = "margin-top: 25px;")
+          #               ),
+          #               column(2,
+          #                      checkboxInput("show_lag_madre_gmap", "ANP Laguna Madre y Delta del Río Bravo", value = FALSE)
+          #               ),
+          #               # === MÓDULO AMBIENTAL - INICIO ===
+          #               column(2,
+          #                      checkboxInput("show_aicas", "Áreas de Importancia para la Conservación de las Aves", value = FALSE)
+          #               ),
+          #               column(2,
+          #                      checkboxInput("show_sist_arrecifal", "Sistema Arrecifal Artificial de Tamaulipas", value = FALSE)
+          #               ),
+          #               column(2,
+          #                      checkboxInput("show_rtp", "Regiones Terrestres Prioritarias", value = FALSE)
+          #               ),
+          #               column(2,
+          #                      checkboxInput("show_rmp", "Regiones Marinas Prioritarias", value = FALSE)
+          #               ),
+          #               column(2,
+          #                      checkboxInput("show_sapcb", "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad", value = FALSE)
+          #               ),
+          #               column(2,
+          #                      checkboxInput("show_lm_ramsar", "Sitio RAMSAR Laguna Madre", value = FALSE)
+          #               ),
+          #               column(2,
+          #                      checkboxInput("show_rn_ramsar", "Sitio RAMSAR Rancho Nuevo", value = FALSE)
+          #               ),
+          #               # === MÓDULO AMBIENTAL - FIN ===
+          #               column(2,
+          #                      checkboxInput("show_playa_bagdad_gmap", "Playa Bagdad", value = FALSE)
+          #               ),
+          #               column(2,
+          #                      checkboxInput("show_dv_layer_gmap", "Recorrido CONANP (fotos)", value = FALSE)
+          #               )
+          #             )
+          #           )
+          #         )
+          #       ),
+          #       fluidRow(
+          #         column(12,
+          #           div(id = "google_map", class = "google-maps-container")
+          #         )
+          #       ),
+          #       fluidRow(
+          #         column(12,
+          #           div(style = "margin-top: 15px;",
+          #             h4("Lugares Encontrados"),
+          #             div(id = "places_results",
+          #                 style = "max-height: 300px; overflow-y: auto; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);")
+          #           )
+          #         )
+          #       )
+          #     )
+          #   }
+          # )
         )
     )
   # )
