@@ -54,31 +54,29 @@ load("datos/Ambiental/aicas.RData")
 load("datos/Ambiental/sistema_arrecifal_tamaulipas.RData")
 load("datos/Ambiental/rtp.RData")
 load("datos/Ambiental/rmp.RData")
-load("datos/Ambiental/sapcb.RData")
 load("datos/Ambiental/lm_ramsar.RData")
 load("datos/Ambiental/rn_ramsar.RData")
-load("datos/Ambiental/uso_suelo_mat.RData")
 load("datos/Ambiental/hidro_tam_nl_coa.RData")
 # === MÓDULO AMBIENTAL - FIN ===
 
 
 # === MÓDULO BUFFERS RIESGO ===
-# Carga de datos de calor
-load("datos/Buffers/buff1_212F.RData")
-load("datos/Buffers/buff2_212F.RData")
-load("datos/Buffers/buff3_90F.RData")
+# Carga de datos de temperatura
+load("datos/Buffers/buff1_300F_50m.RData")
+load("datos/Buffers/buff1_212F_482m.RData")
+load("datos/Buffers/buff1_90F_965m.RData")
 
 #Carga de datos de ruido
-load("datos/Buffers/buff1_140db.RData")
-load("datos/Buffers/buff1_130db.RData")
-load("datos/Buffers/buff1_120db.RData")
-load("datos/Buffers/buff1_111db.RData")
+load("datos/Buffers/buff2_140db_804m.RData")
+load("datos/Buffers/buff2_130db_5471m.RData")
+load("datos/Buffers/buff2_120db_15288m.RData")
+load("datos/Buffers/buff2_111db_36210m.RData")
 
 #Carga de datos de sonic boom
-load("datos/Buffers/buff1_6psf.RData")
-load("datos/Buffers/buff2_4psf.RData")
-load("datos/Buffers/buff3_2psf.RData")
-load("datos/Buffers/buff4_1psff.RData")
+load("datos/Buffers/buff3_6psf_16093m.RData")
+load("datos/Buffers/buff3_4psf_24140m.RData")
+load("datos/Buffers/buff3_2psf_43452m.RData")
+load("datos/Buffers/buff3_1psf_45061m.RData")
 # === MÓDULO BUFFERS RIESGO - FIN ===
 
 
@@ -90,6 +88,9 @@ playa_bagdad_geojson <- geojsonio::geojson_json(playa_bagdad)
 
 # Crear el objeto GeoJSON para la capa de Dv
 dv_layer_geojson <- geojsonio::geojson_json(dv_layer)
+
+
+# === MÓDULO AMBIENTAL - INICIO ===
 
 # Crear el objeto GeoJSON para la capa de Aicas
 aicas_layer_geojson <- geojsonio::geojson_json(aicas)
@@ -103,14 +104,59 @@ rtp_layer_geojson <- geojsonio::geojson_json(rtp)
 # Crear el objeto GeoJSON para la capa de Regiones Marinas Prioritarias
 rmp_layer_geojson <- geojsonio::geojson_json(rmp)
 
-# # Crear el objeto GeoJSON para la capa de Sapcb
-# sapcb_layer_geojson <- geojsonio::geojson_json(sapcb)
-
 # Crear el objeto GeoJSON para la capa de lm_ramsar
 lm_ramsar_layer_geojson <- geojsonio::geojson_json(lm_ramsar)
 
 # Crear el objeto GeoJSON para la capa de rn_ramsar
 rn_ramsar_layer_geojson <- geojsonio::geojson_json(rn_ramsar)
+
+# Crear el objeto GeoJSON para la capa de hidro_tam_nl_coa
+hidro_tam_nl_coa_layer_geojson <- geojsonio::geojson_json(hidro_tam_nl_coa)
+
+# === MÓDULO AMBIENTAL - FIN ===
+
+
+# === MÓDULO BUFFERS RIESGO - INICIO ===
+
+
+### Temperatura
+# Crear el objeto GeoJSON para la capa de buff1_300F_50m
+buff1_300F_50m_layer_geojson <- geojsonio::geojson_json(buff1_300F_50m)
+
+# Crear el objeto GeoJSON para la capa de buff1_212F_482m
+buff1_212F_482m_layer_geojson <- geojsonio::geojson_json(buff1_212F_482m)
+
+# Crear el objeto GeoJSON para la capa de buff1_90F_965m
+buff1_90F_965m_layer_geojson <- geojsonio::geojson_json(buff1_90F_965m)
+
+### Ruido
+# Crear el objeto GeoJSON para la capa de buff2_140db_804m
+buff2_140db_804m_layer_geojson <- geojsonio::geojson_json(buff2_140db_804m)
+
+# Crear el objeto GeoJSON para la capa de buff2_130db_5471m
+buff2_130db_5471m_layer_geojson <- geojsonio::geojson_json(buff2_130db_5471m)
+
+# Crear el objeto GeoJSON para la capa de buff2_120db_15288m
+buff2_120db_15288m_layer_geojson <- geojsonio::geojson_json(buff2_120db_15288m)
+
+# Crear el objeto GeoJSON para la capa de buff2_111db_36210m
+buff2_111db_36210m_layer_geojson <- geojsonio::geojson_json(buff2_111db_36210m)
+
+
+### Sonic Boom
+# Crear el objeto GeoJSON para la capa de buff3_1psff_45061m
+buff3_1psff_45061m_layer_geojson <- geojsonio::geojson_json(buff3_1psf_45061m)
+
+# Crear el objeto GeoJSON para la capa de buff3_2psf_43452m
+buff3_2psf_43452m_layer_geojson <- geojsonio::geojson_json(buff3_2psf_43452m)
+
+# Crear el objeto GeoJSON para la capa de buff3_4psf_24140m
+buff3_4psf_24140m_layer_geojson <- geojsonio::geojson_json(buff3_4psf_24140m)
+
+# Crear el objeto GeoJSON para la capa de buff3_6psf_16093m
+buff3_6psf_16093m_layer_geojson <- geojsonio::geojson_json(buff3_6psf_16093m)
+
+# === MÓDULO BUFFERS RIESGO - FIN ===
 
 
 # Registrar la carpeta de fotos para que Shiny pueda servir las imágenes
@@ -144,7 +190,6 @@ sanciones <- NULL
 multas <- NULL
 agee <- NULL
 agem <- NULL
-sapcb <- NULL
 
 # Variables auxiliares inicializadas como 0
 n_muns <- 0
@@ -154,13 +199,26 @@ n_lmnz <- 0
 n_lpunt <- 0
 n_mnz <- 0
 n_vial <- 0
+#AMBIENTAL
 n_aicas <- 0
 n_sat <- 0
 n_rtp <- 0
 n_rmp <- 0
-n_sapcb <- 0
 n_lmramsar <- 0
 n_rnramsar <- 0
+n_hidro_tam_nl_coa <- 0
+#BUFFERS RIESGO
+n_buff1_300F_50m <- 0
+n_buff1_212F_482m <- 0
+n_buff1_90F_965m <- 0
+n_buff2_140db_804m <- 0
+n_buff2_130db_5471m <- 0
+n_bbuff2_120db_15288m <- 0
+n_buff2_111db_36210m <- 0
+n_buff3_6psf_16093m <- 0
+n_buff3_4psf_24140m <- 0
+n_buff3_2psf_43452m <- 0
+n_buff3_1psff_45061m <- 0
 
 
 # Crear los dataframe de agem y agee para hacer joins (solo cuando se carguen)

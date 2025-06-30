@@ -132,12 +132,6 @@ server <- function(input, output, session) {
     # Llama a la función de JS para mostrar/ocultar la capa
     shinyjs::runjs(sprintf("togglermpLayer(%s);", tolower(input$show_rmp)))
   }, ignoreNULL = FALSE)
- 
-  # # Observer para la capa sapcb en Google Maps
-  # observeEvent(input$show_sapcb, {
-  #   # Llama a la función de JS para mostrar/ocultar la capa
-  #   shinyjs::runjs(sprintf("togglesapcbLayer(%s);", tolower(input$show_sapcb)))
-  # }, ignoreNULL = FALSE) 
   
   # Observer para la capa lm ramsar en Google Maps
   observeEvent(input$show_lm_ramsar, {
@@ -149,6 +143,78 @@ server <- function(input, output, session) {
   observeEvent(input$show_rn_ramsar, {
     # Llama a la función de JS para mostrar/ocultar la capa
     shinyjs::runjs(sprintf("togglernramsarLayer(%s);", tolower(input$show_rn_ramsar)))
+  }, ignoreNULL = FALSE) 
+  
+  # Observer para la capa hidro_tam_nl_coa en Google Maps
+  observeEvent(input$show_hidro_tam_nl_coa, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglehidro_tam_nl_coaLayer(%s);", tolower(input$show_hidro_tam_nl_coa)))
+  }, ignoreNULL = FALSE)  
+  
+  # Observer para la capa buff1_300F_50m en Google Maps
+  observeEvent(input$show_buff1_300F_50m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff1_300F_50mLayer(%s);", tolower(input$show_buff1_300F_50m)))
+  }, ignoreNULL = FALSE)  
+  
+  # Observer para la capa buff1_212F_482m en Google Maps
+  observeEvent(input$show_buff1_212F_482m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff1_212F_482mLayer(%s);", tolower(input$show_buff1_212F_482m)))
+  }, ignoreNULL = FALSE)  
+  
+  # Observer para la capa buff1_90F_965m en Google Maps
+  observeEvent(input$show_buff1_90F_965m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff1_90F_965mLayer(%s);", tolower(input$show_buff1_90F_965m)))
+  }, ignoreNULL = FALSE)   
+
+  # Observer para la capa buff2_140db_804m en Google Maps
+  observeEvent(input$show_buff2_140db_804m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff2_140db_804mLayer(%s);", tolower(input$show_buff2_140db_804m)))
+  }, ignoreNULL = FALSE)   
+
+  # Observer para la capa buff2_130db_5471m en Google Maps
+  observeEvent(input$show_buff2_130db_5471m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff2_130db_5471mLayer(%s);", tolower(input$show_buff2_130db_5471m)))
+  }, ignoreNULL = FALSE)
+
+  # Observer para la capa buff2_120db_15288m en Google Maps
+  observeEvent(input$show_buff2_120db_15288m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff2_120db_15288mLayer(%s);", tolower(input$show_buff2_120db_15288m)))
+  }, ignoreNULL = FALSE)  
+
+  # Observer para la capa buff2_111db_36210m en Google Maps
+  observeEvent(input$show_buff2_111db_36210m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff2_111db_36210mLayer(%s);", tolower(input$show_buff2_111db_36210m)))
+  }, ignoreNULL = FALSE)   
+
+  # Observer para la capa buff3_6psf_16093m en Google Maps
+  observeEvent(input$show_buff3_6psf_16093m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff3_6psf_16093mLayer(%s);", tolower(input$show_buff3_6psf_16093m)))
+  }, ignoreNULL = FALSE)    
+
+  # Observer para la capa buff3_4psf_24140m en Google Maps
+  observeEvent(input$show_buff3_4psf_24140m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff3_4psf_24140mLayer(%s);", tolower(input$show_buff3_4psf_24140m)))
+  }, ignoreNULL = FALSE)
+
+  # Observer para la capa buff3_2psf_43452m en Google Maps
+  observeEvent(input$show_buff3_2psf_43452m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff3_2psf_43452mLayer(%s);", tolower(input$show_buff3_2psf_43452m)))
+  }, ignoreNULL = FALSE) 
+
+  # Observer para la capa buff3_1psff_45061m en Google Maps
+  observeEvent(input$show_buff3_1psff_45061m, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglebuff3_1psff_45061mLayer(%s);", tolower(input$show_buff3_1psff_45061m)))
   }, ignoreNULL = FALSE) 
   
 
@@ -403,23 +469,6 @@ server <- function(input, output, session) {
                     weight = 1, color = "black", opacity = 1, group = "Regiones Marinas Prioritarias")
       } else .}
   }) 
-  
-  # Observer para Sitios de Atención Prioritaria para la Conservación de la Biodiversidad
-  observeEvent(input$sapcb, {
-    if(input$sapcb && is.null(sapcb)) {
-      sapcb <<- load_heavy_data("sapcb")
-      n_sapcb <<- nrow(sapcb)
-    }
-
-    leafletProxy("mapa") %>%
-      clearGroup("Sitios de Atención Prioritaria para la Conservación de la Biodiversidad") %>%
-      {if(input$sapcb) {
-        addPolygons(., data = sapcb,
-                    weight = 1, color = "black", opacity = 1, group = "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad")
-      } else .}
-  })
-
-
 
   # Observer para Sitio RAMSAR Laguna Madre
   observeEvent(input$lm_ramsar, {
@@ -451,6 +500,187 @@ server <- function(input, output, session) {
                     weight = 1, color = "black", opacity = 1, group = "Sitio Ramsar Rancho Nuevo")
       } else .}
   })
+  
+  # Observer para Hidrología
+  observeEvent(input$hidro_tam_nl_coa, {
+    if(input$hidro_tam_nl_coa && is.null(hidro_tam_nl_coa)) {
+      hidro_tam_nl_coa <<- load_heavy_data("hidro_tam_nl_coa")
+      n_hidro_tam_nl_coa <<- nrow(hidro_tam_nl_coa)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Sitio Ramsar Rancho Nuevo") %>%
+      {if(input$hidro_tam_nl_coa) {
+        addPolygons(., data = hidro_tam_nl_coa,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff1_300F_50m
+  observeEvent(input$buff1_300F_50m, {
+    if(input$buff1_300F_50m && is.null(buff1_300F_50m)) {
+      buff1_300F_50m <<- load_heavy_data("buff1_300F_50m")
+      n_buff1_300F_50m <<- nrow(buff1_300F_50m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Columna de calor (150°C - 0.05 km)") %>%
+      {if(input$buff1_300F_50m) {
+        addPolygons(., data = buff1_300F_50m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff1_212F_482m
+  observeEvent(input$buff1_212F_482m, {
+    if(input$buff1_212F_482m && is.null(buff1_212F_482m)) {
+      buff1_212F_482m <<- load_heavy_data("buff1_212F_482m")
+      n_buff1_212F_482m <<- nrow(buff1_212F_482m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Columna de calor (100°C - 0.482 km") %>%
+      {if(input$buff1_212F_482m) {
+        addPolygons(., data = buff1_212F_482m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff1_90F_965m
+  observeEvent(input$buff1_90F_965m, {
+    if(input$buff1_90F_965m && is.null(buff1_90F_965m)) {
+      buff1_90F_965m <<- load_heavy_data("buff1_90F_965m")
+      n_buff1_90F_965m <<- nrow(buff1_90F_965m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Columna de calor (32.22°C - 0.965 km)") %>%
+      {if(input$buff1_90F_965m) {
+        addPolygons(., data = buff1_90F_965m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff2_140db_804m
+  observeEvent(input$buff2_140db_804m, {
+    if(input$buff2_140db_804m && is.null(buff2_140db_804m)) {
+      buff2_140db_804m <<- load_heavy_data("buff2_140db_804m")
+      n_buff2_140db_804m <<- nrow(buff2_140db_804m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Contorno de ruido (140 dB - 0.804 km)") %>%
+      {if(input$buff2_140db_804m) {
+        addPolygons(., data = buff2_140db_804m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff2_130db_5471m
+  observeEvent(input$buff2_130db_5471m, {
+    if(input$buff2_130db_5471m && is.null(buff2_130db_5471m)) {
+      buff2_130db_5471m <<- load_heavy_data("buff2_130db_5471m")
+      n_buff2_130db_5471m <<- nrow(buff2_130db_5471m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Contorno de ruido (130 dB - 5.47 km)") %>%
+      {if(input$buff2_130db_5471m) {
+        addPolygons(., data = buff2_130db_5471m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff2_120db_15288m
+  observeEvent(input$buff2_120db_15288m, {
+    if(input$buff2_120db_15288m && is.null(buff2_120db_15288m)) {
+      buff2_120db_15288m <<- load_heavy_data("buff2_120db_15288m")
+      n_buff2_120db_15288m <<- nrow(buff2_120db_15288m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Contorno de ruido (120 dB - 15.29 km)") %>%
+      {if(input$buff2_120db_15288m) {
+        addPolygons(., data = buff2_120db_15288m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff2_111db_36210m
+  observeEvent(input$buff2_111db_36210m, {
+    if(input$buff2_111db_36210m && is.null(buff2_111db_36210m)) {
+      buff2_111db_36210m <<- load_heavy_data("buff2_111db_36210m")
+      n_buff2_111db_36210m <<- nrow(buff2_111db_36210m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Contorno de ruido (111 dB - 36.21 km)") %>%
+      {if(input$buff2_111db_36210m) {
+        addPolygons(., data = buff2_111db_36210m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+
+  # Observer para buff3_6psf_16093m
+  observeEvent(input$buff3_6psf_16093m, {
+    if(input$buff3_6psf_16093m && is.null(buff3_6psf_16093m)) {
+      buff3_6psf_16093m <<- load_heavy_data("buff3_6psf_16093m")
+      n_buff3_6psf_16093m <<- nrow(buff3_6psf_16093m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Explosiones sónicas (6 psf - 16.09 km)") %>%
+      {if(input$buff3_6psf_16093m) {
+        addPolygons(., data = buff3_6psf_16093m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff3_4psf_24140m
+  observeEvent(input$buff3_4psf_24140m, {
+    if(input$buff3_4psf_24140m && is.null(buff3_4psf_24140m)) {
+      buff3_4psf_24140m <<- load_heavy_data("buff3_4psf_24140m")
+      n_buff3_4psf_24140m <<- nrow(buff3_4psf_24140m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Explosiones sónicas (4 psf - 24.14 km)") %>%
+      {if(input$buff3_4psf_24140m) {
+        addPolygons(., data = buff3_4psf_24140m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff3_2psf_43452m
+  observeEvent(input$buff3_2psf_43452m, {
+    if(input$buff3_2psf_43452m && is.null(buff3_2psf_43452m)) {
+      buff3_2psf_43452m <<- load_heavy_data("buff3_2psf_43452m")
+      n_buff3_2psf_43452m <<- nrow(buff3_2psf_43452m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Explosiones sónicas (2 psf - 43.45 km)") %>%
+      {if(input$buff3_2psf_43452m) {
+        addPolygons(., data = buff3_2psf_43452m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
+  # Observer para buff3_1psff_45061m
+  observeEvent(input$buff3_1psff_45061m, {
+    if(input$buff3_1psff_45061m && is.null(buff3_1psff_45061m)) {
+      buff3_1psff_45061m <<- load_heavy_data("buff3_1psff_45061m")
+      n_buff3_1psff_45061m <<- nrow(buff3_1psff_45061m)
+    }
+    
+    leafletProxy("mapa") %>%
+      clearGroup("Explosiones sónicas (1 psf - 45.06 km)") %>%
+      {if(input$buff3_1psff_45061m) {
+        addPolygons(., data = buff3_1psff_45061m,
+                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      } else .}
+  }) 
+  
   
   # observe({
   #   pal <- colorNumeric(palette = colorRampPalette(c("white", "red"))(10), 

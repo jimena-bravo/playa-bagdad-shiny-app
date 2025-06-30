@@ -14,6 +14,8 @@ let sapcbLayer;
 let lm_ramsarLayer;
 let rn_ramsarLayer;
 
+
+
 // Initialize Google Maps
 function initMap() {
   // Center on Playa Bagdad, Tamaulipas, Mexico
@@ -111,7 +113,7 @@ function initMap() {
       aicasdLayer.setStyle({
         fillColor: '#0077b6', // Un azul distintivo
         strokeWeight: 1.5,
-        strokeColor: '#023e8a',
+        strokeColor: '#48494b',
         fillOpacity: 0.4
       });
     }
@@ -129,7 +131,7 @@ function initMap() {
       sistema_arrecifal_tamaulipasLayer.setStyle({
         fillColor: '#ecb311', // Un amarillo distintivo
         strokeWeight: 1.5,
-        strokeColor: '#023e8a',
+        strokeColor: '#48494b',
         fillOpacity: 0.4
       });
     }
@@ -147,7 +149,7 @@ function initMap() {
       rtpLayer.setStyle({
         fillColor: '#09c260', // Un verde distintivo
         strokeWeight: 1.5,
-        strokeColor: '#023e8a',
+        strokeColor: '#48494b',
         fillOpacity: 0.4
       });
     }
@@ -165,7 +167,7 @@ function initMap() {
       rmpLayer.setStyle({
         fillColor: '#0925c2', // Un azul distintivo
         strokeWeight: 1.5,
-        strokeColor: '#023e8a',
+        strokeColor: '#48494b',
         fillOpacity: 0.4
       });
     }
@@ -173,24 +175,6 @@ function initMap() {
     console.error("Error al cargar o procesar la capa GeoJSON de Regiones Marinas Prioritarias:", e);
   } 
    
-       // Cargar y configurar la capa de Sitios de Atención Prioritaria para la Conservación de la Biodiversidad
-  try {
-    const geojsonScript = document.getElementById('sapcb_layer_geojson');
-    if (geojsonScript && geojsonScript.textContent) {
-      const sapcbData = JSON.parse(geojsonScript.textContent);
-      sapcbLayer = new google.maps.Data();
-      sapcbLayer.addGeoJson(sapcbData);
-      sapcbLayer.setStyle({
-        fillColor: '#cf00a0', // Un morado distintivo
-        strokeWeight: 1.5,
-        strokeColor: '#023e8a',
-        fillOpacity: 0.4
-      });
-    }
-  } catch (e) {
-    console.error("Error al cargar o procesar la capa GeoJSON de Atención Prioritaria para la Conservación de la Biodiversidad:", e);
-  }  
-  
          // Cargar y configurar la capa de Sitio Ramsar Laguna Madre
   try {
     const geojsonScript = document.getElementById('lm_ramsar_layer_geojson');
@@ -201,7 +185,7 @@ function initMap() {
       lm_ramsarLayer.setStyle({
         fillColor: '#02a8c2', // Un azul distintivo
         strokeWeight: 1.5,
-        strokeColor: '#023e8a',
+        strokeColor: '#48494b',
         fillOpacity: 0.4
       });
     }
@@ -219,12 +203,240 @@ function initMap() {
       rn_ramsarLayer.setStyle({
         fillColor: '#0077b6', // Un azul distintivo
         strokeWeight: 1.5,
-        strokeColor: '#23a775',
+        strokeColor: '#48494b',
         fillOpacity: 0.4
       });
     }
   } catch (e) {
     console.error("Error al cargar o procesar la capa GeoJSON de Sitio Ramsar Rancho Nuevo:", e);
+  } 
+}
+
+           // Cargar y configurar la capa de Hidrología
+  try {
+    const geojsonScript = document.getElementById('hidro_tam_nl_coa_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const hidro_tam_nl_coaData = JSON.parse(geojsonScript.textContent);
+      hidro_tam_nl_coaLayer = new google.maps.Data();
+      hidro_tam_nl_coaLayer.addGeoJson(uso_suelo_matData);
+      hidro_tam_nl_coaLayer.setStyle({
+        fillColor: '#0ceac8', // Un azul distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Hidrología:", e);
+  } 
+}
+
+           // Cargar y configurar la capa de buff1_300F_50m
+  try {
+    const geojsonScript = document.getElementById('buff1_300F_50m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff1_300F_50mData = JSON.parse(geojsonScript.textContent);
+      buff1_300F_50mLayer = new google.maps.Data();
+      buff1_300F_50mLayer.addGeoJson(buff1_300F_50mData);
+      buff1_300F_50mLayer.setStyle({
+        fillColor: '#dc140a', // Un rojo distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Columna de calor (150°C - 0.05 km):", e);
+  } 
+}
+
+           // Cargar y configurar la capa de buff1_212F_482m
+  try {
+    const geojsonScript = document.getElementById('buff1_212F_482m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff1_212F_482mData = JSON.parse(geojsonScript.textContent);
+      buff1_212F_482mLayer = new google.maps.Data();
+      buff1_212F_482mLayer.addGeoJson(buff1_212F_482mData);
+      buff1_212F_482mLayer.setStyle({
+        fillColor: '#ee9606', // Un naranja distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Columna de calor (100°C - 0.482 km):", e);
+  } 
+}
+
+           // Cargar y configurar la capa de buff1_90F_965m
+  try {
+    const geojsonScript = document.getElementById('buff1_90F_965m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff1_90F_965mData = JSON.parse(geojsonScript.textContent);
+      buff1_90F_965mLayer = new google.maps.Data();
+      buff1_90F_965mLayer.addGeoJson(buff1_90F_965mData);
+      buff1_90F_965mLayer.setStyle({
+        fillColor: '#f3e61e', // Un amarillo distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Columna de calor (32.22°C - 0.965 km):", e);
+  } 
+}
+
+           // Cargar y configurar la capa de buff2_140db_804m
+  try {
+    const geojsonScript = document.getElementById('buff2_140db_804m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff2_140db_804mData = JSON.parse(geojsonScript.textContent);
+      buff2_140db_804mLayer = new google.maps.Data();
+      buff2_140db_804mLayer.addGeoJson(buff2_140db_804mData);
+      buff2_140db_804mLayer.setStyle({
+        fillColor: '#dc140a', // Un rojo distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Contorno de ruido (140 dB - 0.804 km):", e);
+  } 
+}
+
+           // Cargar y configurar la capa de buff2_130db_5471m
+  try {
+    const geojsonScript = document.getElementById('buff2_130db_5471m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff2_130db_5471mData = JSON.parse(geojsonScript.textContent);
+      buff2_130db_5471mLayer = new google.maps.Data();
+      buff2_130db_5471mLayer.addGeoJson(buff2_130db_5471mData);
+      buff2_130db_5471mLayer.setStyle({
+        fillColor: '#ee9606', // Un naranja distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Contorno de ruido (130 dB - 5.47 km):", e);
+  } 
+}
+
+           // Cargar y configurar la capa de buff2_120db_15288m
+  try {
+    const geojsonScript = document.getElementById('buff2_120db_15288m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff2_120db_15288mData = JSON.parse(geojsonScript.textContent);
+      buff2_120db_15288mLayer = new google.maps.Data();
+      buff2_120db_15288mLayer.addGeoJson(buff2_120db_15288mData);
+      buff2_120db_15288mLayer.setStyle({
+        fillColor: '#f3e61e', // Un amarillo distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Contorno de ruido (120 dB - 15.29 km):", e);
+  } 
+}
+
+           // Cargar y configurar la capa de buff2_111db_36210m
+  try {
+    const geojsonScript = document.getElementById('buff2_111db_36210m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff2_111db_36210mData = JSON.parse(geojsonScript.textContent);
+      buff2_111db_36210mLayer = new google.maps.Data();
+      buff2_111db_36210mLayer.addGeoJson(buff2_111db_36210mData);
+      buff2_111db_36210mLayer.setStyle({
+        fillColor: '#73df78', // Un verde distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Contorno de ruido (111 dB - 36.21 km):", e);
+  } 
+}
+
+          // Cargar y configurar la capa de buff3_6psf_16093m
+  try {
+    const geojsonScript = document.getElementById('buff3_6psf_16093m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff3_6psf_16093mData = JSON.parse(geojsonScript.textContent);
+      buff3_6psf_16093mLayer = new google.maps.Data();
+      buff3_6psf_16093mLayer.addGeoJson(buff3_6psf_16093mData);
+      buff3_6psf_16093mLayer.setStyle({
+        fillColor: '#dc140a', // Un rojo distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Explosiones sónicas (6 psf - 16.09 km):", e);
+  } 
+}
+
+           // Cargar y configurar la capa de buff3_4psf_24140m
+  try {
+    const geojsonScript = document.getElementById('buff3_4psf_24140m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff3_4psf_24140mData = JSON.parse(geojsonScript.textContent);
+      buff3_4psf_24140mLayer = new google.maps.Data();
+      buff3_4psf_24140mLayer.addGeoJson(buff3_4psf_24140mData);
+      buff3_4psf_24140mLayer.setStyle({
+        fillColor: '#ee9606', // Un naranja distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Explosiones sónicas (4 psf - 24.14 km):", e);
+  } 
+}
+
+           // Cargar y configurar la capa de buff3_2psf_43452m
+  try {
+    const geojsonScript = document.getElementById('buff3_2psf_43452m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff3_2psf_43452mData = JSON.parse(geojsonScript.textContent);
+      buff3_2psf_43452mLayer = new google.maps.Data();
+      buff3_2psf_43452mLayer.addGeoJson(buff3_2psf_43452mData);
+      buff3_2psf_43452mLayer.setStyle({
+        fillColor: '#73df78', // Un amarillo distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Explosiones sónicas (2 psf - 43.45 km):", e);
+  } 
+} 
+
+           // Cargar y configurar la capa de buff3_1psff_45061m
+  try {
+    const geojsonScript = document.getElementById('buff3_1psff_45061m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff3_1psff_45061mData = JSON.parse(geojsonScript.textContent);
+      buff3_1psff_45061mLayer = new google.maps.Data();
+      buff3_1psff_45061mLayer.addGeoJson(buff3_1psff_45061mData);
+      buff3_1psff_45061mLayer.setStyle({
+        fillColor: '#73df78', // Un verde distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Explosiones sónicas (1 psf - 45.06 km):", e);
   } 
 }
 
@@ -277,13 +489,6 @@ function togglermpLayer(show) {
   }
 }
 
-// Función para mostrar/ocultar la capa sapcb
-function togglesapcbLayer(show) {
-  if (sapcbLayer) {
-    sapcbLayer.setMap(show ? map : null);
-  }
-}
-
 // Función para mostrar/ocultar la capa lm_ramsar
 function togglelmramsarLayer(show) {
   if (lm_ramsarLayer) {
@@ -297,6 +502,91 @@ function togglernramsarLayer(show) {
     rn_ramsarLayer.setMap(show ? map : null);
   }
 }
+
+// Función para mostrar/ocultar la capa hidro_tam_nl_coa
+function togglehidro_tam_nl_coaLayer(show) {
+  if (hidro_tam_nl_coaLayer) {
+    hidro_tam_nl_coaLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff1_300F_50m
+function togglebuff1_300F_50mLayer(show) {
+  if (buff1_300F_50mLayer) {
+    buff1_300F_50mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff1_212F_482m
+function togglebuff1_212F_482mLayer(show) {
+  if (buff1_212F_482mLayer) {
+    buff1_212F_482mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff1_90F_965m
+function togglebuff1_90F_965mLayer(show) {
+  if (buff1_90F_965mLayer) {
+    buff1_90F_965mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff2_140db_804m
+function togglebuff2_140db_804mLayer(show) {
+  if (buff2_140db_804mLayer) {
+    buff2_140db_804mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff2_130db_5471m
+function togglebuff2_130db_5471mLayer(show) {
+  if (buff2_130db_5471mLayer) {
+    buff2_130db_5471mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff2_120db_15288m
+function togglebuff2_120db_15288mLayer(show) {
+  if (buff2_120db_15288mLayer) {
+    buff2_120db_15288mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff2_111db_36210m
+function togglebuff2_111db_36210mLayer(show) {
+  if (buff2_111db_36210mLayer) {
+    buff2_111db_36210mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff3_6psf_16093m
+function togglebuff3_6psf_16093mLayer(show) {
+  if (buff3_6psf_16093mLayer) {
+    buff3_6psf_16093mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff3_4psf_24140m
+function togglebuff3_4psf_24140mLayer(show) {
+  if (buff3_4psf_24140mLayer) {
+    buff3_4psf_24140mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff3_2psf_43452m
+function togglebuff3_2psf_43452mLayer(show) {
+  if (buff3_2psf_43452mLayer) {
+    buff3_2psf_43452mLayer.setMap(show ? map : null);
+  }
+}
+
+// Función para mostrar/ocultar la capa buff3_1psff_45061m
+function togglebuff3_1psff_45061mLayer(show) {
+  if (buff3_1psff_45061mLayer) {
+    buff3_1psff_45061mLayer.setMap(show ? map : null);
+  }
+}
+
 
 // Search for places
 function searchPlaces() {

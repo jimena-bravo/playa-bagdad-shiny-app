@@ -68,6 +68,7 @@ ui_app <- fluidPage(
             tags$script(id = "playa_bagdad_geojson", type = "application/json", playa_bagdad_geojson),
             # Datos GeoJSON para la capa Dv
             tags$script(id = "dv_layer_geojson", type = "application/json", dv_layer_geojson),
+            # Datos GeoJSON para las CAPAS AMBIENTALES
             # Datos GeoJSON para la capa aicas
             tags$script(id = "aicas_layer_geojson", type = "application/json", aicas_layer_geojson),
             # Datos GeoJSON para la capa sistema arrecifal tamaulipas
@@ -76,14 +77,41 @@ ui_app <- fluidPage(
             tags$script(id = "rtp_layer_geojson", type = "application/json", rtp_layer_geojson),
             # Datos GeoJSON para la capa rmp
             tags$script(id = "rmp_layer_geojson", type = "application/json", rmp_layer_geojson),
-            # # Datos GeoJSON para la capa sapcb
-            # tags$script(id = "sapcb_layer_geojson", type = "application/json", sapcb_layer_geojson),
             # Datos GeoJSON para la capa lm_ramsar
             tags$script(id = "lm_ramsar_layer_geojson", type = "application/json", lm_ramsar_layer_geojson),
             # Datos GeoJSON para la capa rn_ramsar
             tags$script(id = "rn_ramsar_layer_geojson", type = "application/json", rn_ramsar_layer_geojson),
+            # Datos GeoJSON para la capa hidro_tam_nl_coa
+            tags$script(id = "hidro_tam_nl_coa_layer_geojson", type = "application/json", hidro_tam_nl_coa_layer_geojson),
+            # Datos GeoJSON para las CAPAS RIESGO
+            ## Temperatura
+            # Datos GeoJSON para la capa buff1_300F_50m
+            tags$script(id = "buff1_300F_50m_layer_geojson", type = "application/json", buff1_300F_50m_layer_geojson),      
+            # Datos GeoJSON para la capa buff1_212F_482m
+            tags$script(id = "buff1_212F_482m_layer_geojson", type = "application/json", buff1_212F_482m_layer_geojson),
+            # Datos GeoJSON para la capa buff1_90F_965m
+            tags$script(id = "buff1_90F_965m_layer_geojson", type = "application/json", buff1_90F_965m_layer_geojson),
+            ## Ruido
+            # Datos GeoJSON para la capa buff2_140db_804m
+            tags$script(id = "buff2_140db_804m_layer_geojson", type = "application/json", buff2_140db_804m_layer_geojson),
+            # Datos GeoJSON para la capa buff2_130db_5471m
+            tags$script(id = "buff2_130db_5471m_layer_geojson", type = "application/json", buff2_130db_5471m_layer_geojson),
+            # Datos GeoJSON para la capa buff2_111db_36210m
+            tags$script(id = "buff2_111db_36210m_layer_geojson", type = "application/json", buff2_111db_36210m_layer_geojson),
+            # Datos GeoJSON para la capa buff2_120db_15288m
+            tags$script(id = "buff2_120db_15288m_layer_geojson", type = "application/json", buff2_120db_15288m_layer_geojson),
+            ## Explosion sonica
+            # Datos GeoJSON para la capa buff3_6psf_16093m
+            tags$script(id = "buff3_6psf_16093m_layer_geojson", type = "application/json", buff3_6psf_16093m_layer_geojson),
+            # Datos GeoJSON para la capa buff3_4psf_24140m
+            tags$script(id = "buff3_4psf_24140m_layer_geojson", type = "application/json", buff3_4psf_24140m_layer_geojson),
+            # Datos GeoJSON para la capa buff3_1psff_45061m
+            tags$script(id = "buff3_1psff_45061m_layer_geojson", type = "application/json", buff3_1psff_45061m_layer_geojson),
+            # Datos GeoJSON para la capa buff3_2psf_43452m
+            tags$script(id = "buff3_2psf_43452m_layer_geojson", type = "application/json", buff3_2psf_43452m_layer_geojson),
           ),
 
+        
           # Contenido de la primera pestaña ----
           # La primera de las pestañas de la app será el mapa de la distribución de las sanciones
           # Cada uno de los tabPanels define cada una de las pestañas
@@ -130,11 +158,25 @@ ui_app <- fluidPage(
                 checkboxInput("sistema_arrecifal_tamaulipas", label = "Sistema Arrecifal Artificial Tamaulipas", value = F),
                 checkboxInput("rtp", label = "Regiones Terrestres Prioritarias", value = F),
                 checkboxInput("rmp", label = "Regiones Marinas Prioritarias", value = F),
-                checkboxInput("sapcb", label = "Sitios de Atención Prioritaria para la Conservacion de la Biodiversidad", value = F),
                 checkboxInput("lm_ramsar", label = "Sitio Ramsar Laguna Madre", value = F),
                 checkboxInput("rn_ramsar", label = "Sitio Ramsar Rancho Nuevo", value = F),
-                
-                
+                checkboxInput("hidro_tam_nl_coa", label = "Hidrología", value = F),
+               
+                # Capas riesgo
+                h5("Radios de Riesgo", style = "color: #34495e; font-size: 14px; margin-bottom: 10px; margin-top: 20px;"),
+                checkboxInput("buff1_300F_50m", label = "Columna de calor (150°C - 0.05 km)", value = F),
+                checkboxInput("buff1_212F_482m", label = "Columna de calor (100°C - 0.482 km)", value = F),
+                checkboxInput("buff1_90F_965m", label = "Columna de calor (32.22°C - 0.965 km)", value = F),
+                checkboxInput("buff2_140db_804m", label = "Contorno de ruido (140 dB - 0.804 km)", value = F),
+                checkboxInput("buff2_130db_5471m", label = "Contorno de ruido (130 dB - 5.47 km)", value = F),
+                checkboxInput("buff2_120db_15288m", label = "Contorno de ruido (120 dB - 15.29 km)", value = F),
+                checkboxInput("buff2_111db_36210m", label = "Contorno de ruido (111 dB - 36.21 km)", value = F),
+                checkboxInput("buff3_6psf_16093m", label = "Explosiones sónicas (6 psf - 16.09 km)", value = F),
+                checkboxInput("buff3_4psf_24140m", label = "Explosiones sónicas (4 psf - 24.14 km)", value = F),  
+                checkboxInput("buff3_2psf_43452m", label = "Explosiones sónicas (2 psf - 43.45 km)", value = F),
+                checkboxInput("buff3_1psff_45061m", label = "Explosiones sónicas (1 psf - 45.06 km)", value = F), 
+
+                               
                 # Información sobre rendimiento
                 hr(),
                 div(style = "font-size: 12px; color: #7f8c8d;",
@@ -177,6 +219,8 @@ ui_app <- fluidPage(
                            actionButton("search_btn", "Buscar",
                                         class = "btn btn-primary", style = "margin-top: 25px;"),
                            checkboxInput("show_lag_madre_gmap", "ANP Laguna Madre y Delta del Río Bravo", value = FALSE),
+                           checkboxInput("show_playa_bagdad_gmap", "Playa Bagdad", value = FALSE),
+                           checkboxInput("show_dv_layer_gmap", "Recorrido CONANP (fotos)", value = FALSE),
                            # === MÓDULO AMBIENTAL - INICIO ===
                            checkboxInput("show_aicas", "Áreas de Importancia para la Conservación de las Aves", value = FALSE),
                            checkboxInput("show_sist_arrecifal", "Sistema Arrecifal Artificial de Tamaulipas", value = FALSE),
@@ -185,9 +229,23 @@ ui_app <- fluidPage(
                            checkboxInput("show_sapcb", "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad", value = FALSE),
                            checkboxInput("show_lm_ramsar", "Sitio RAMSAR Laguna Madre", value = FALSE),
                            checkboxInput("show_rn_ramsar", "Sitio RAMSAR Rancho Nuevo", value = FALSE),
+                           checkboxInput("hidro_tam_nl_coa", "Hidrología", value = FALSE),
                            # === MÓDULO AMBIENTAL - FIN ===
-                           checkboxInput("show_playa_bagdad_gmap", "Playa Bagdad", value = FALSE),
-                           checkboxInput("show_dv_layer_gmap", "Recorrido CONANP (fotos)", value = FALSE),
+                           # === MÓDULO RIESGO - INICIO ===
+                           checkboxInput("buff1_300F_50m", "Columna de calor (150°C - 0.05 km)", value = FALSE),
+                           checkboxInput("buff1_212F_482m", "Columna de calor (100°C - 0.482 km)", value = FALSE),
+                           checkboxInput("buff1_90F_965m", "Columna de calor (32.22°C - 0.965 km)", value = FALSE),
+                           
+                           checkboxInput("buff2_140db_804m", "Contorno de ruido (140 dB - 0.804 km)", value = FALSE),
+                           checkboxInput("buff2_130db_5471m", "Contorno de ruido (130 dB - 5.47 km)", value = FALSE),
+                           checkboxInput("buff2_120db_15288m", "Contorno de ruido (120 dB - 15.29 km)", value = FALSE),
+                           checkboxInput("buff2_111db_36210m", "Contorno de ruido (111 dB - 36.21 km)", value = FALSE),
+                           
+                           checkboxInput("buff3_6psf_16093m", "Explosiones sónicas (6 psf - 16.09 km)", value = FALSE),
+                           checkboxInput("buff3_4psf_24140m", "Explosiones sónicas (4 psf - 24.14 km)", value = FALSE),
+                           checkboxInput("buff3_2psf_43452m", "Explosiones sónicas (2 psf - 43.45 km)", value = FALSE),
+                           checkboxInput("buff3_1psff_45061m", "Explosiones sónicas (1 psf - 45.06 km)", value = FALSE),
+                           # === MÓDULO RIESGO - FIN ===     
                            
                            # Información sobre rendimiento
                            hr(),
@@ -264,9 +322,6 @@ ui_app <- fluidPage(
           #               ),
           #               column(2,
           #                      checkboxInput("show_rmp", "Regiones Marinas Prioritarias", value = FALSE)
-          #               ),
-          #               column(2,
-          #                      checkboxInput("show_sapcb", "Sitios de Atención Prioritaria para la Conservación de la Biodiversidad", value = FALSE)
           #               ),
           #               column(2,
           #                      checkboxInput("show_lm_ramsar", "Sitio RAMSAR Laguna Madre", value = FALSE)
