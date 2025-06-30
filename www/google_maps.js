@@ -250,6 +250,36 @@ function initMap() {
   } 
 }
 
+// Cargar y configurar la capa de Uso de Suelo y Vegetación
+try {
+  const geojsonScript = document.getElementById('uso_suelo_mat_layer_geojson');
+  if (geojsonScript && geojsonScript.textContent) {
+    const uso_suelo_matData = JSON.parse(geojsonScript.textContent);
+    uso_suelo_matLayer = new google.maps.Data();
+    uso_suelo_matLayer.addGeoJson(uso_suelo_matData);
+
+    // Generar colores aleatorios para las 33 clases
+    const coloresPorCVE_UNION = {};
+    for (let i = 1; i <= 33; i++) {
+      coloresPorCVE_UNION[i.toString()] = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+    }
+
+    // Aplica el estilo categorizado
+    uso_suelo_matLayer.setStyle(function(feature) {
+      const cve = feature.getProperty('CVE_UNION');
+      const color = coloresPorCVE_UNION[cve] || "#cccccc"; // Color por defecto si no está definido
+      return {
+        fillColor: color,
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      };
+    });
+  }
+} catch (e) {
+  console.error("Error al cargar o procesar la capa GeoJSON de Uso de Suelo y Vegetación:", e);
+}
+
            // Cargar y configurar la capa de buff1_212F_482m
   try {
     const geojsonScript = document.getElementById('buff1_212F_482m_layer_geojson');

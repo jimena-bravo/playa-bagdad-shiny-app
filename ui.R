@@ -83,6 +83,8 @@ ui_app <- fluidPage(
             tags$script(id = "rn_ramsar_layer_geojson", type = "application/json", rn_ramsar_layer_geojson),
             # Datos GeoJSON para la capa hidro_tam_nl_coa
             tags$script(id = "hidro_tam_nl_coa_layer_geojson", type = "application/json", hidro_tam_nl_coa_layer_geojson),
+            # Datos GeoJSON para la capa uso_suelo_mat
+            tags$script(id = "uso_suelo_mat_layer_geojson", type = "application/json", uso_suelo_mat_layer_geojson),
             # Datos GeoJSON para las CAPAS RIESGO
             ## Temperatura
             # Datos GeoJSON para la capa buff1_300F_50m
@@ -161,6 +163,7 @@ ui_app <- fluidPage(
                 checkboxInput("lm_ramsar", label = "Sitio Ramsar Laguna Madre", value = F),
                 checkboxInput("rn_ramsar", label = "Sitio Ramsar Rancho Nuevo", value = F),
                 checkboxInput("hidro_tam_nl_coa", label = "Hidrología", value = F),
+                checkboxInput("uso_suelo_mat", label = "Uso de Suelo y Vegetación", value = F),
                
                 # Capas riesgo
                 h5("Radios de Riesgo", style = "color: #34495e; font-size: 14px; margin-bottom: 10px; margin-top: 20px;"),
@@ -230,6 +233,7 @@ ui_app <- fluidPage(
                            checkboxInput("show_lm_ramsar", "Sitio RAMSAR Laguna Madre", value = FALSE),
                            checkboxInput("show_rn_ramsar", "Sitio RAMSAR Rancho Nuevo", value = FALSE),
                            checkboxInput("hidro_tam_nl_coa", "Hidrología", value = FALSE),
+                           checkboxInput("uso_suelo_mat", "Uso de Suelo y Vegetación", value = FALSE),
                            # === MÓDULO AMBIENTAL - FIN ===
                            # === MÓDULO RIESGO - INICIO ===
                            checkboxInput("buff1_300F_50m", "Columna de calor (150°C - 0.05 km)", value = FALSE),

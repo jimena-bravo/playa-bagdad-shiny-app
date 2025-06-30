@@ -57,6 +57,7 @@ load("datos/Ambiental/rmp.RData")
 load("datos/Ambiental/lm_ramsar.RData")
 load("datos/Ambiental/rn_ramsar.RData")
 load("datos/Ambiental/hidro_tam_nl_coa.RData")
+load("datos/Ambiental/uso_suelo_mat.RData")
 # === MÓDULO AMBIENTAL - FIN ===
 
 
@@ -112,6 +113,9 @@ rn_ramsar_layer_geojson <- geojsonio::geojson_json(rn_ramsar)
 
 # Crear el objeto GeoJSON para la capa de hidro_tam_nl_coa
 hidro_tam_nl_coa_layer_geojson <- geojsonio::geojson_json(hidro_tam_nl_coa)
+
+# Crear el objeto GeoJSON para la capa de uso_suelo_mat
+uso_suelo_mat_layer_geojson <- geojsonio::geojson_json(uso_suelo_mat)
 
 # === MÓDULO AMBIENTAL - FIN ===
 
@@ -207,6 +211,8 @@ n_rmp <- 0
 n_lmramsar <- 0
 n_rnramsar <- 0
 n_hidro_tam_nl_coa <- 0
+n_uso_suelo_mat <- 0
+
 #BUFFERS RIESGO
 n_buff1_300F_50m <- 0
 n_buff1_212F_482m <- 0
