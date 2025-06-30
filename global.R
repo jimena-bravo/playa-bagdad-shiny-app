@@ -53,11 +53,33 @@ load("datos/dv_layer.RData")
 load("datos/Ambiental/aicas.RData")
 load("datos/Ambiental/sistema_arrecifal_tamaulipas.RData")
 load("datos/Ambiental/rtp.RData")
-load("datos/ambiental/rmp.RData")
-load("datos/ambiental/sapcb.RData")
-load("datos/ambiental/lm_ramsar.RData")
-load("datos/ambiental/rn_ramsar.RData")
+load("datos/Ambiental/rmp.RData")
+load("datos/Ambiental/sapcb.RData")
+load("datos/Ambiental/lm_ramsar.RData")
+load("datos/Ambiental/rn_ramsar.RData")
+load("datos/Ambiental/uso_suelo_mat.RData")
+load("datos/Ambiental/hidro_tam_nl_coa.RData")
 # === MÓDULO AMBIENTAL - FIN ===
+
+
+# === MÓDULO BUFFERS RIESGO ===
+# Carga de datos de calor
+load("datos/Buffers/buff1_212F.RData")
+load("datos/Buffers/buff2_212F.RData")
+load("datos/Buffers/buff3_90F.RData")
+
+#Carga de datos de ruido
+load("datos/Buffers/buff1_140db.RData")
+load("datos/Buffers/buff1_130db.RData")
+load("datos/Buffers/buff1_120db.RData")
+load("datos/Buffers/buff1_111db.RData")
+
+#Carga de datos de sonic boom
+load("datos/Buffers/buff1_6psf.RData")
+load("datos/Buffers/buff2_4psf.RData")
+load("datos/Buffers/buff3_2psf.RData")
+load("datos/Buffers/buff4_1psff.RData")
+# === MÓDULO BUFFERS RIESGO - FIN ===
 
 
 # Crear el objeto GeoJSON para la capa de Laguna Madre
