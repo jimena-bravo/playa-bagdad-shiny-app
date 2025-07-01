@@ -511,7 +511,6 @@ server <- function(input, output, session) {
       } else .}
   })
 
-
   # Observer para Sitio RAMSAR Rancho Nuevo
   observeEvent(input$rn_ramsar, {
     if(input$rn_ramsar && is.null(rn_ramsar)) {
@@ -584,7 +583,7 @@ server <- function(input, output, session) {
                     ))
       } else .}
   })
-  
+    
   # Observer para buff1_300F_50m
   observeEvent(input$buff1_300F_50m, {
     if(input$buff1_300F_50m && is.null(buff1_300F_50m)) {
@@ -749,7 +748,6 @@ server <- function(input, output, session) {
                     weight = 1, color = "black", opacity = 1, group = "Explosiones sónicas (1 psf - 45.06 km)")
       } else .}
   }) 
-  
   
   # observe({
   #   pal <- colorNumeric(palette = colorRampPalette(c("white", "red"))(10), 

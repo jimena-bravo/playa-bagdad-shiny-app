@@ -80,7 +80,6 @@ load("datos/Buffers/buff3_2psf_43452m.RData")
 load("datos/Buffers/buff3_1psf_45061m.RData")
 # === MÓDULO BUFFERS RIESGO - FIN ===
 
-
 # Crear el objeto GeoJSON para la capa de Laguna Madre
 lag_madre_geojson <- geojsonio::geojson_json(lag_madre)
 
@@ -121,7 +120,6 @@ uso_suelo_mat_layer_geojson <- geojsonio::geojson_json(uso_suelo_mat)
 
 
 # === MÓDULO BUFFERS RIESGO - INICIO ===
-
 
 ### Temperatura
 # Crear el objeto GeoJSON para la capa de buff1_300F_50m

@@ -86,14 +86,14 @@ ui_app <- fluidPage(
             # Datos GeoJSON para la capa uso_suelo_mat
             tags$script(id = "uso_suelo_mat_layer_geojson", type = "application/json", uso_suelo_mat_layer_geojson),
             # Datos GeoJSON para las CAPAS RIESGO
-            ## Temperatura
+            ##### Temperatura
             # Datos GeoJSON para la capa buff1_300F_50m
             tags$script(id = "buff1_300F_50m_layer_geojson", type = "application/json", buff1_300F_50m_layer_geojson),      
             # Datos GeoJSON para la capa buff1_212F_482m
             tags$script(id = "buff1_212F_482m_layer_geojson", type = "application/json", buff1_212F_482m_layer_geojson),
             # Datos GeoJSON para la capa buff1_90F_965m
             tags$script(id = "buff1_90F_965m_layer_geojson", type = "application/json", buff1_90F_965m_layer_geojson),
-            ## Ruido
+            ##### Ruido
             # Datos GeoJSON para la capa buff2_140db_804m
             tags$script(id = "buff2_140db_804m_layer_geojson", type = "application/json", buff2_140db_804m_layer_geojson),
             # Datos GeoJSON para la capa buff2_130db_5471m
@@ -102,15 +102,15 @@ ui_app <- fluidPage(
             tags$script(id = "buff2_111db_36210m_layer_geojson", type = "application/json", buff2_111db_36210m_layer_geojson),
             # Datos GeoJSON para la capa buff2_120db_15288m
             tags$script(id = "buff2_120db_15288m_layer_geojson", type = "application/json", buff2_120db_15288m_layer_geojson),
-            ## Explosion sonica
+            ##### Explosion sonica
             # Datos GeoJSON para la capa buff3_6psf_16093m
             tags$script(id = "buff3_6psf_16093m_layer_geojson", type = "application/json", buff3_6psf_16093m_layer_geojson),
             # Datos GeoJSON para la capa buff3_4psf_24140m
             tags$script(id = "buff3_4psf_24140m_layer_geojson", type = "application/json", buff3_4psf_24140m_layer_geojson),
-            # Datos GeoJSON para la capa buff3_1psff_45061m
-            tags$script(id = "buff3_1psff_45061m_layer_geojson", type = "application/json", buff3_1psff_45061m_layer_geojson),
             # Datos GeoJSON para la capa buff3_2psf_43452m
             tags$script(id = "buff3_2psf_43452m_layer_geojson", type = "application/json", buff3_2psf_43452m_layer_geojson),
+            # Datos GeoJSON para la capa buff3_1psf_45061m
+            tags$script(id = "buff3_1psf_45061m_layer_geojson", type = "application/json", buff3_1psf_45061m_layer_geojson),
           ),
 
         
@@ -177,9 +177,8 @@ ui_app <- fluidPage(
                 checkboxInput("buff3_6psf_16093m", label = "Explosiones sónicas (6 psf - 16.09 km)", value = F),
                 checkboxInput("buff3_4psf_24140m", label = "Explosiones sónicas (4 psf - 24.14 km)", value = F),  
                 checkboxInput("buff3_2psf_43452m", label = "Explosiones sónicas (2 psf - 43.45 km)", value = F),
-                checkboxInput("buff3_1psff_45061m", label = "Explosiones sónicas (1 psf - 45.06 km)", value = F), 
+                checkboxInput("buff3_1psf_45061m", label = "Explosiones sónicas (1 psf - 45.06 km)", value = F), 
 
-                               
                 # Información sobre rendimiento
                 hr(),
                 div(style = "font-size: 12px; color: #7f8c8d;",
@@ -239,16 +238,14 @@ ui_app <- fluidPage(
                            checkboxInput("buff1_300F_50m", "Columna de calor (150°C - 0.05 km)", value = FALSE),
                            checkboxInput("buff1_212F_482m", "Columna de calor (100°C - 0.482 km)", value = FALSE),
                            checkboxInput("buff1_90F_965m", "Columna de calor (32.22°C - 0.965 km)", value = FALSE),
-                           
                            checkboxInput("buff2_140db_804m", "Contorno de ruido (140 dB - 0.804 km)", value = FALSE),
                            checkboxInput("buff2_130db_5471m", "Contorno de ruido (130 dB - 5.47 km)", value = FALSE),
                            checkboxInput("buff2_120db_15288m", "Contorno de ruido (120 dB - 15.29 km)", value = FALSE),
                            checkboxInput("buff2_111db_36210m", "Contorno de ruido (111 dB - 36.21 km)", value = FALSE),
-                           
                            checkboxInput("buff3_6psf_16093m", "Explosiones sónicas (6 psf - 16.09 km)", value = FALSE),
                            checkboxInput("buff3_4psf_24140m", "Explosiones sónicas (4 psf - 24.14 km)", value = FALSE),
                            checkboxInput("buff3_2psf_43452m", "Explosiones sónicas (2 psf - 43.45 km)", value = FALSE),
-                           checkboxInput("buff3_1psff_45061m", "Explosiones sónicas (1 psf - 45.06 km)", value = FALSE),
+                           checkboxInput("buff3_1psf_45061m", "Explosiones sónicas (1 psf - 45.06 km)", value = FALSE),
                            # === MÓDULO RIESGO - FIN ===     
                            
                            # Información sobre rendimiento
