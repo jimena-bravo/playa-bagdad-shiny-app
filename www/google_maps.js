@@ -451,14 +451,14 @@ try {
   } 
 } 
 
-           // Cargar y configurar la capa de buff3_1psff_45061m
+           // Cargar y configurar la capa de buff3_1psf_45061m
   try {
-    const geojsonScript = document.getElementById('buff3_1psff_45061m_layer_geojson');
+    const geojsonScript = document.getElementById('buff3_1psf_45061m_layer_geojson');
     if (geojsonScript && geojsonScript.textContent) {
-      const buff3_1psff_45061mData = JSON.parse(geojsonScript.textContent);
-      buff3_1psff_45061mLayer = new google.maps.Data();
-      buff3_1psff_45061mLayer.addGeoJson(buff3_1psff_45061mData);
-      buff3_1psff_45061mLayer.setStyle({
+      const buff3_1psf_45061mData = JSON.parse(geojsonScript.textContent);
+      buff3_1psf_45061mLayer = new google.maps.Data();
+      buff3_1psf_45061mLayer.addGeoJson(buff3_1psf_45061mData);
+      buff3_1psf_45061mLayer.setStyle({
         fillColor: '#73df78', // Un verde distintivo
         strokeWeight: 1.5,
         strokeColor: '#48494b',
@@ -610,10 +610,10 @@ function togglebuff3_2psf_43452mLayer(show) {
   }
 }
 
-// Función para mostrar/ocultar la capa buff3_1psff_45061m
-function togglebuff3_1psff_45061mLayer(show) {
-  if (buff3_1psff_45061mLayer) {
-    buff3_1psff_45061mLayer.setMap(show ? map : null);
+// Función para mostrar/ocultar la capa buff3_1psf_45061m
+function togglebuff3_1psf_45061mLayer(show) {
+  if (buff3_1psf_45061mLayer) {
+    buff3_1psf_45061mLayer.setMap(show ? map : null);
   }
 }
 

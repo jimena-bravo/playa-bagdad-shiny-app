@@ -148,8 +148,8 @@ buff2_111db_36210m_layer_geojson <- geojsonio::geojson_json(buff2_111db_36210m)
 
 
 ### Sonic Boom
-# Crear el objeto GeoJSON para la capa de buff3_1psff_45061m
-buff3_1psff_45061m_layer_geojson <- geojsonio::geojson_json(buff3_1psf_45061m)
+# Crear el objeto GeoJSON para la capa de buff3_1psf_45061m
+buff3_1psf_45061m_layer_geojson <- geojsonio::geojson_json(buff3_1psf_45061m)
 
 # Crear el objeto GeoJSON para la capa de buff3_2psf_43452m
 buff3_2psf_43452m_layer_geojson <- geojsonio::geojson_json(buff3_2psf_43452m)
@@ -224,7 +224,7 @@ n_buff2_111db_36210m <- 0
 n_buff3_6psf_16093m <- 0
 n_buff3_4psf_24140m <- 0
 n_buff3_2psf_43452m <- 0
-n_buff3_1psff_45061m <- 0
+n_buff3_1psf_45061m <- 0
 
 
 # Crear los dataframe de agem y agee para hacer joins (solo cuando se carguen)

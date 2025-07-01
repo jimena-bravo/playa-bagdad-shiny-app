@@ -212,10 +212,10 @@ server <- function(input, output, session) {
     shinyjs::runjs(sprintf("togglebuff3_2psf_43452mLayer(%s);", tolower(input$show_buff3_2psf_43452m)))
   }, ignoreNULL = FALSE) 
 
-  # Observer para la capa buff3_1psff_45061m en Google Maps
-  observeEvent(input$show_buff3_1psff_45061m, {
+  # Observer para la capa buff3_1psf_45061m en Google Maps
+  observeEvent(input$show_buff3_1psf_45061m, {
     # Llama a la función de JS para mostrar/ocultar la capa
-    shinyjs::runjs(sprintf("togglebuff3_1psff_45061mLayer(%s);", tolower(input$show_buff3_1psff_45061m)))
+    shinyjs::runjs(sprintf("togglebuff3_1psf_45061mLayer(%s);", tolower(input$show_buff3_1psf_45061m)))
   }, ignoreNULL = FALSE) 
   
 
@@ -560,25 +560,20 @@ server <- function(input, output, session) {
     leafletProxy("mapa") %>%
       clearGroup("Uso de Suelo y Vegetación") %>%
       {if(input$uso_suelo_mat) {
-        # Crear paleta de colores para las descripciones
+        # Obtener valores únicos y crear paleta automática
+        valores_unicos <- unique(uso_suelo_mat$DESCRIPCIO)
+        
+        # Crear paleta automática basada en el número de valores únicos
         colores_uso_suelo <- colorFactor(
-          palette = c(
-            "#E74C3C", "#3498DB", "#2ECC71", "#F1C40F", "#9B59B6",
-            "#E67E22", "#1ABC9C", "#34495E", "#E91E63", "#00BCD4",
-            "#4CAF50", "#FF9800", "#795548", "#607D8B", "#9C27B0",
-            "#FF5722", "#3F51B5", "#009688", "#FFC107", "#8BC34A",
-            "#FFEB3B", "#03A9F4", "#FF5722", "#673AB7", "#00BCD4",
-            "#4CAF50", "#FF9800", "#795548", "#607D8B", "#9C27B0",
-            "#FF5722", "#3F51B5", "#009688"
-          ),
-          domain = uso_suelo_mat$DESCRIPCIO
+          palette = "viridis",  # Paleta que soporta muchos colores
+          domain = valores_unicos
         )
         
         addPolygons(., data = uso_suelo_mat,
                     weight = 1, 
                     color = "#000000", 
                     fillColor = ~colores_uso_suelo(DESCRIPCIO),
-                    fillOpacity = 0.5, 
+                    fillOpacity = 0.8, 
                     opacity = 0.9, 
                     group = "Uso de Suelo y Vegetación",
                     label = ~paste("Clase:", DESCRIPCIO),
@@ -601,12 +596,7 @@ server <- function(input, output, session) {
       clearGroup("Columna de calor (150°C - 0.05 km)") %>%
       {if(input$buff1_300F_50m) {
         addPolygons(., data = buff1_300F_50m,
-                    weight = 2, 
-                    color = "#dc140a", 
-                    fillColor = "#dc140a",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8, 
-                    group = "Columna de calor (150°C - 0.05 km)") 
+                    weight = 1, color = "black", opacity = 1, group = "Columna de calor (150°C - 0.05 km)")
       } else .}
   }) 
   
@@ -618,15 +608,10 @@ server <- function(input, output, session) {
     }
     
     leafletProxy("mapa") %>%
-      clearGroup("Columna de calor (100°C - 0.482 km") %>%
+      clearGroup("Columna de calor (100°C - 0.482 km)") %>%
       {if(input$buff1_212F_482m) {
         addPolygons(., data = buff1_212F_482m,
-                    weight = 2, 
-                    color = "#ee9606", 
-                    fillColor = "#ee9606",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8, 
-                    group = "Columna de calor (150°C - 0.05 km)")
+                    weight = 1, color = "black", opacity = 1, group = "Columna de calor (100°C - 0.482 km)")
       } else .}
   }) 
   
@@ -641,12 +626,7 @@ server <- function(input, output, session) {
       clearGroup("Columna de calor (32.22°C - 0.965 km)") %>%
       {if(input$buff1_90F_965m) {
         addPolygons(., data = buff1_90F_965m,
-                    weight = 2, 
-                    color = "#f3e61e", 
-                    fillColor = "#f3e61e",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8, 
-                    group = "Columna de calor (32.22°C - 0.965 km)")
+                    weight = 1, color = "black", opacity = 1, group = "Columna de calor (32.22°C - 0.965 km)")
       } else .}
   }) 
   
@@ -661,12 +641,7 @@ server <- function(input, output, session) {
       clearGroup("Contorno de ruido (140 dB - 0.804 km)") %>%
       {if(input$buff2_140db_804m) {
         addPolygons(., data = buff2_140db_804m,
-                    weight = 2, 
-                    color = "#dc140a", 
-                    fillColor = "#dc140a",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8, 
-                    group = "Contorno de ruido (140 dB - 0.804 km)")
+                    weight = 1, color = "black", opacity = 1, group = "Contorno de ruido (140 dB - 0.804 km)")
       } else .}
   }) 
   
@@ -681,12 +656,7 @@ server <- function(input, output, session) {
       clearGroup("Contorno de ruido (130 dB - 5.47 km)") %>%
       {if(input$buff2_130db_5471m) {
         addPolygons(., data = buff2_130db_5471m,
-                    weight = 2, 
-                    color = "#ee9606", 
-                    fillColor = "#ee9606",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8,
-                    group = "Contorno de ruido (130 dB - 5.47 km)")
+                    weight = 1, color = "black", opacity = 1, group = "Contorno de ruido (130 dB - 5.47 km)")
       } else .}
   }) 
   
@@ -701,12 +671,7 @@ server <- function(input, output, session) {
       clearGroup("Contorno de ruido (120 dB - 15.29 km)") %>%
       {if(input$buff2_120db_15288m) {
         addPolygons(., data = buff2_120db_15288m,
-                    weight = 2, 
-                    color = "#f3e61e", 
-                    fillColor = "#f3e61e",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8, 
-                    group = "Contorno de ruido (120 dB - 15.29 km)")
+                    weight = 1, color = "black", opacity = 1, group = "Contorno de ruido (120 dB - 15.29 km)")
       } else .}
   }) 
   
@@ -721,11 +686,6 @@ server <- function(input, output, session) {
       clearGroup("Contorno de ruido (111 dB - 36.21 km)") %>%
       {if(input$buff2_111db_36210m) {
         addPolygons(., data = buff2_111db_36210m,
-                    weight = 2, 
-                    color = "#73df78", 
-                    fillColor = "#73df78",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8, 
                     weight = 1, color = "black", opacity = 1, group = "Contorno de ruido (111 dB - 36.21 km)")
       } else .}
   }) 
@@ -741,12 +701,7 @@ server <- function(input, output, session) {
       clearGroup("Explosiones sónicas (6 psf - 16.09 km)") %>%
       {if(input$buff3_6psf_16093m) {
         addPolygons(., data = buff3_6psf_16093m,
-                    weight = 2, 
-                    color = "#dc140a", 
-                    fillColor = "#dc140a",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8, 
-                    group = "Explosiones sónicas (6 psf - 16.09 km)")
+                    weight = 1, color = "black", opacity = 1, group = "Explosiones sónicas (6 psf - 16.09 km)")
       } else .}
   }) 
   
@@ -761,12 +716,7 @@ server <- function(input, output, session) {
       clearGroup("Explosiones sónicas (4 psf - 24.14 km)") %>%
       {if(input$buff3_4psf_24140m) {
         addPolygons(., data = buff3_4psf_24140m,
-                    weight = 2, 
-                    color = "#ee9606", 
-                    fillColor = "#ee9606",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8,
-                    group = "Explosiones sónicas (4 psf - 24.14 km)")
+                    weight = 1, color = "black", opacity = 1, group = "Explosiones sónicas (4 psf - 24.14 km)")
       } else .}
   }) 
   
@@ -781,32 +731,22 @@ server <- function(input, output, session) {
       clearGroup("Explosiones sónicas (2 psf - 43.45 km)") %>%
       {if(input$buff3_2psf_43452m) {
         addPolygons(., data = buff3_2psf_43452m,
-                    weight = 2, 
-                    color = "#f3e61e", 
-                    fillColor = "#f3e61e",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8, 
-                    group = "Explosiones sónicas (2 psf - 43.45 km)")
+                    weight = 1, color = "black", opacity = 1, group = "Explosiones sónicas (2 psf - 43.45 km)")
       } else .}
   }) 
   
-  # Observer para buff3_1psff_45061m
-  observeEvent(input$buff3_1psff_45061m, {
-    if(input$buff3_1psff_45061m && is.null(buff3_1psff_45061m)) {
-      buff3_1psff_45061m <<- load_heavy_data("buff3_1psff_45061m")
-      n_buff3_1psff_45061m <<- nrow(buff3_1psff_45061m)
+  # Observer para buff3_1psf_45061m
+  observeEvent(input$buff3_1psf_45061m, {
+    if(input$buff3_1psf_45061m && is.null(buff3_1psf_45061m)) {
+      buff3_1psf_45061m <<- load_heavy_data("buff3_1psf_45061m")
+      n_buff3_1psf_45061m <<- nrow(buff3_1psf_45061m)
     }
     
     leafletProxy("mapa") %>%
       clearGroup("Explosiones sónicas (1 psf - 45.06 km)") %>%
-      {if(input$buff3_1psff_45061m) {
-        addPolygons(., data = buff3_1psff_45061m,
-                    weight = 2, 
-                    color = "#73df78", 
-                    fillColor = "#73df78",
-                    fillOpacity = 0.4, 
-                    opacity = 0.8, 
-                    group = "Explosiones sónicas (1 psf - 45.06 km)")
+      {if(input$buff3_1psf_45061m) {
+        addPolygons(., data = buff3_1psf_45061m,
+                    weight = 1, color = "black", opacity = 1, group = "Explosiones sónicas (1 psf - 45.06 km)")
       } else .}
   }) 
   
