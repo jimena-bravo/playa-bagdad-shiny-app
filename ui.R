@@ -68,49 +68,51 @@ ui_app <- fluidPage(
             tags$script(id = "playa_bagdad_geojson", type = "application/json", playa_bagdad_geojson),
             # Datos GeoJSON para la capa Dv
             tags$script(id = "dv_layer_geojson", type = "application/json", dv_layer_geojson),
-            # Datos GeoJSON para las CAPAS AMBIENTALES
+            # Datos GeoJSON para la capa complejo starbase
+            tags$script(id = "complejo_starbase_geojson", type = "application/json", complejo_starbase_geojson),
+             # Datos GeoJSON para las CAPAS AMBIENTALES
             # Datos GeoJSON para la capa aicas
-            tags$script(id = "aicas_layer_geojson", type = "application/json", aicas_layer_geojson),
+            tags$script(id = "aicas_geojson", type = "application/json", aicas_geojson),
             # Datos GeoJSON para la capa sistema arrecifal tamaulipas
-            tags$script(id = "sistema_arrecifal_tamaulipas_layer_geojson", type = "application/json", sistema_arrecifal_tamaulipas_layer_geojson),
+            tags$script(id = "sistema_arrecifal_tamaulipas_geojson", type = "application/json", sistema_arrecifal_tamaulipas_geojson),
             # Datos GeoJSON para la capa rtp
-            tags$script(id = "rtp_layer_geojson", type = "application/json", rtp_layer_geojson),
+            tags$script(id = "rtp_geojson", type = "application/json", rtp_geojson),
             # Datos GeoJSON para la capa rmp
-            tags$script(id = "rmp_layer_geojson", type = "application/json", rmp_layer_geojson),
+            tags$script(id = "rmp_geojson", type = "application/json", rmp_geojson),
             # Datos GeoJSON para la capa lm_ramsar
-            tags$script(id = "lm_ramsar_layer_geojson", type = "application/json", lm_ramsar_layer_geojson),
+            tags$script(id = "lm_ramsar_geojson", type = "application/json", lm_ramsar_geojson),
             # Datos GeoJSON para la capa rn_ramsar
-            tags$script(id = "rn_ramsar_layer_geojson", type = "application/json", rn_ramsar_layer_geojson),
+            tags$script(id = "rn_ramsar_geojson", type = "application/json", rn_ramsar_geojson),
             # Datos GeoJSON para la capa hidro_tam_nl_coa
-            tags$script(id = "hidro_tam_nl_coa_layer_geojson", type = "application/json", hidro_tam_nl_coa_layer_geojson),
+            tags$script(id = "hidro_tam_nl_coa_geojson", type = "application/json", hidro_tam_nl_coa_geojson),
             # Datos GeoJSON para la capa uso_suelo_mat
-            tags$script(id = "uso_suelo_mat_layer_geojson", type = "application/json", uso_suelo_mat_layer_geojson),
+            tags$script(id = "uso_suelo_mat_geojson", type = "application/json", uso_suelo_mat_geojson),
             # Datos GeoJSON para las CAPAS RIESGO
             ##### Temperatura
             # Datos GeoJSON para la capa buff1_300F_50m
-            tags$script(id = "buff1_300F_50m_layer_geojson", type = "application/json", buff1_300F_50m_layer_geojson),      
+            tags$script(id = "buff1_300F_50m_geojson", type = "application/json", buff1_300F_50m_geojson),      
             # Datos GeoJSON para la capa buff1_212F_482m
-            tags$script(id = "buff1_212F_482m_layer_geojson", type = "application/json", buff1_212F_482m_layer_geojson),
+            tags$script(id = "buff1_212F_482m_geojson", type = "application/json", buff1_212F_482m_geojson),
             # Datos GeoJSON para la capa buff1_90F_965m
-            tags$script(id = "buff1_90F_965m_layer_geojson", type = "application/json", buff1_90F_965m_layer_geojson),
+            tags$script(id = "buff1_90F_965m_geojson", type = "application/json", buff1_90F_965m_geojson),
             ##### Ruido
             # Datos GeoJSON para la capa buff2_140db_804m
-            tags$script(id = "buff2_140db_804m_layer_geojson", type = "application/json", buff2_140db_804m_layer_geojson),
+            tags$script(id = "buff2_140db_804m_geojson", type = "application/json", buff2_140db_804m_geojson),
             # Datos GeoJSON para la capa buff2_130db_5471m
-            tags$script(id = "buff2_130db_5471m_layer_geojson", type = "application/json", buff2_130db_5471m_layer_geojson),
+            tags$script(id = "buff2_130db_5471m_geojson", type = "application/json", buff2_130db_5471m_geojson),
             # Datos GeoJSON para la capa buff2_111db_36210m
-            tags$script(id = "buff2_111db_36210m_layer_geojson", type = "application/json", buff2_111db_36210m_layer_geojson),
+            tags$script(id = "buff2_111db_36210m_geojson", type = "application/json", buff2_111db_36210m_geojson),
             # Datos GeoJSON para la capa buff2_120db_15288m
-            tags$script(id = "buff2_120db_15288m_layer_geojson", type = "application/json", buff2_120db_15288m_layer_geojson),
+            tags$script(id = "buff2_120db_15288m_geojson", type = "application/json", buff2_120db_15288m_geojson),
             ##### Explosion sonica
             # Datos GeoJSON para la capa buff3_6psf_16093m
-            tags$script(id = "buff3_6psf_16093m_layer_geojson", type = "application/json", buff3_6psf_16093m_layer_geojson),
+            tags$script(id = "buff3_6psf_16093m_geojson", type = "application/json", buff3_6psf_16093m_geojson),
             # Datos GeoJSON para la capa buff3_4psf_24140m
-            tags$script(id = "buff3_4psf_24140m_layer_geojson", type = "application/json", buff3_4psf_24140m_layer_geojson),
+            tags$script(id = "buff3_4psf_24140m_geojson", type = "application/json", buff3_4psf_24140m_geojson),
             # Datos GeoJSON para la capa buff3_2psf_43452m
-            tags$script(id = "buff3_2psf_43452m_layer_geojson", type = "application/json", buff3_2psf_43452m_layer_geojson),
+            tags$script(id = "buff3_2psf_43452m_geojson", type = "application/json", buff3_2psf_43452m_geojson),
             # Datos GeoJSON para la capa buff3_1psf_45061m
-            tags$script(id = "buff3_1psf_45061m_layer_geojson", type = "application/json", buff3_1psf_45061m_layer_geojson),
+            tags$script(id = "buff3_1psf_45061m_geojson", type = "application/json", buff3_1psf_45061m_geojson),
           ),
 
         
@@ -137,6 +139,7 @@ ui_app <- fluidPage(
                 checkboxInput("puntos", label = "Puntos de interés", value = T),
                 checkboxInput("playa_bagdad", label = "Playa Bagdad", value = T),
                 checkboxInput("lag_madre", label = "Área Natural Protegida (Laguna Madre)", value = F),
+                checkboxInput("complejo_starbase", label = "Complejo Starbase", value = F),
 
                 # Capas administrativas
                 h5("División Administrativa", style = "color: #34495e; font-size: 14px; margin-bottom: 10px; margin-top: 20px;"),
@@ -222,7 +225,8 @@ ui_app <- fluidPage(
                                         class = "btn btn-primary", style = "margin-top: 25px;"),
                            checkboxInput("show_lag_madre_gmap", "ANP Laguna Madre y Delta del Río Bravo", value = FALSE),
                            checkboxInput("show_playa_bagdad_gmap", "Playa Bagdad", value = FALSE),
-                           checkboxInput("show_dv_layer_gmap", "Recorrido CONANP (fotos)", value = FALSE),
+                           checkboxInput("show_dv_gmap", "Recorrido CONANP (fotos)", value = FALSE),
+                           checkboxInput("show_complejo_starbase_gmap", "Complejo Starbase", value = FALSE),
                            # === MÓDULO AMBIENTAL - INICIO ===
                            checkboxInput("show_aicas", "Áreas de Importancia para la Conservación de las Aves", value = FALSE),
                            checkboxInput("show_sist_arrecifal", "Sistema Arrecifal Artificial de Tamaulipas", value = FALSE),
@@ -335,7 +339,7 @@ ui_app <- fluidPage(
           #                      checkboxInput("show_playa_bagdad_gmap", "Playa Bagdad", value = FALSE)
           #               ),
           #               column(2,
-          #                      checkboxInput("show_dv_layer_gmap", "Recorrido CONANP (fotos)", value = FALSE)
+          #                      checkboxInput("show_dv_gmap", "Recorrido CONANP (fotos)", value = FALSE)
           #               )
           #             )
           #           )

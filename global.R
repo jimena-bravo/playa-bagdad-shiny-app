@@ -47,6 +47,12 @@ load("datos/playa_bagdad.RData")
 load("datos/lag_madre.RData")
 load("datos/puntos.RData")
 load("datos/dv_layer.RData")
+load("datos/complejo_starbase.RData")
+
+# Cargar complejo Starbase desde CSV
+complejo_starbase <- st_as_sf(complejo_starbase, 
+                              coords = c("X", "Y"), 
+                              crs = 4326)
 
 # === MÓDULO AMBIENTAL - INICIO ===
 # Carga de datos ambientales
@@ -89,32 +95,34 @@ playa_bagdad_geojson <- geojsonio::geojson_json(playa_bagdad)
 # Crear el objeto GeoJSON para la capa de Dv
 dv_layer_geojson <- geojsonio::geojson_json(dv_layer)
 
+# Crear el objeto GeoJSON para la capa de Dv
+complejo_starbase_geojson <- geojsonio::geojson_json(complejo_starbase)
 
 # === MÓDULO AMBIENTAL - INICIO ===
 
 # Crear el objeto GeoJSON para la capa de Aicas
-aicas_layer_geojson <- geojsonio::geojson_json(aicas)
+aicas_geojson <- geojsonio::geojson_json(aicas)
 
 # Crear el objeto GeoJSON para la capa de Sistema Arrecifal Artificial
-sistema_arrecifal_tamaulipas_layer_geojson <- geojsonio::geojson_json(sistema_arrecifal_tamaulipas)
+sistema_arrecifal_tamaulipas_geojson <- geojsonio::geojson_json(sistema_arrecifal_tamaulipas)
 
 # Crear el objeto GeoJSON para la capa de Regiones Terrestres Prioritarias
-rtp_layer_geojson <- geojsonio::geojson_json(rtp)
+rtp_geojson <- geojsonio::geojson_json(rtp)
 
 # Crear el objeto GeoJSON para la capa de Regiones Marinas Prioritarias
-rmp_layer_geojson <- geojsonio::geojson_json(rmp)
+rmp_geojson <- geojsonio::geojson_json(rmp)
 
 # Crear el objeto GeoJSON para la capa de lm_ramsar
-lm_ramsar_layer_geojson <- geojsonio::geojson_json(lm_ramsar)
+lm_ramsar_geojson <- geojsonio::geojson_json(lm_ramsar)
 
 # Crear el objeto GeoJSON para la capa de rn_ramsar
-rn_ramsar_layer_geojson <- geojsonio::geojson_json(rn_ramsar)
+rn_ramsar_geojson <- geojsonio::geojson_json(rn_ramsar)
 
 # Crear el objeto GeoJSON para la capa de hidro_tam_nl_coa
-hidro_tam_nl_coa_layer_geojson <- geojsonio::geojson_json(hidro_tam_nl_coa)
+hidro_tam_nl_coa_geojson <- geojsonio::geojson_json(hidro_tam_nl_coa)
 
 # Crear el objeto GeoJSON para la capa de uso_suelo_mat
-uso_suelo_mat_layer_geojson <- geojsonio::geojson_json(uso_suelo_mat)
+uso_suelo_mat_geojson <- geojsonio::geojson_json(uso_suelo_mat)
 
 # === MÓDULO AMBIENTAL - FIN ===
 
@@ -123,40 +131,40 @@ uso_suelo_mat_layer_geojson <- geojsonio::geojson_json(uso_suelo_mat)
 
 ### Temperatura
 # Crear el objeto GeoJSON para la capa de buff1_300F_50m
-buff1_300F_50m_layer_geojson <- geojsonio::geojson_json(buff1_300F_50m)
+buff1_300F_50m_geojson <- geojsonio::geojson_json(buff1_300F_50m)
 
 # Crear el objeto GeoJSON para la capa de buff1_212F_482m
-buff1_212F_482m_layer_geojson <- geojsonio::geojson_json(buff1_212F_482m)
+buff1_212F_482m_geojson <- geojsonio::geojson_json(buff1_212F_482m)
 
 # Crear el objeto GeoJSON para la capa de buff1_90F_965m
-buff1_90F_965m_layer_geojson <- geojsonio::geojson_json(buff1_90F_965m)
+buff1_90F_965m_geojson <- geojsonio::geojson_json(buff1_90F_965m)
 
 ### Ruido
 # Crear el objeto GeoJSON para la capa de buff2_140db_804m
-buff2_140db_804m_layer_geojson <- geojsonio::geojson_json(buff2_140db_804m)
+buff2_140db_804m_geojson <- geojsonio::geojson_json(buff2_140db_804m)
 
 # Crear el objeto GeoJSON para la capa de buff2_130db_5471m
-buff2_130db_5471m_layer_geojson <- geojsonio::geojson_json(buff2_130db_5471m)
+buff2_130db_5471m_geojson <- geojsonio::geojson_json(buff2_130db_5471m)
 
 # Crear el objeto GeoJSON para la capa de buff2_120db_15288m
-buff2_120db_15288m_layer_geojson <- geojsonio::geojson_json(buff2_120db_15288m)
+buff2_120db_15288m_geojson <- geojsonio::geojson_json(buff2_120db_15288m)
 
 # Crear el objeto GeoJSON para la capa de buff2_111db_36210m
-buff2_111db_36210m_layer_geojson <- geojsonio::geojson_json(buff2_111db_36210m)
+buff2_111db_36210m_geojson <- geojsonio::geojson_json(buff2_111db_36210m)
 
 
 ### Sonic Boom
 # Crear el objeto GeoJSON para la capa de buff3_1psf_45061m
-buff3_1psf_45061m_layer_geojson <- geojsonio::geojson_json(buff3_1psf_45061m)
+buff3_1psf_45061m_geojson <- geojsonio::geojson_json(buff3_1psf_45061m)
 
 # Crear el objeto GeoJSON para la capa de buff3_2psf_43452m
-buff3_2psf_43452m_layer_geojson <- geojsonio::geojson_json(buff3_2psf_43452m)
+buff3_2psf_43452m_geojson <- geojsonio::geojson_json(buff3_2psf_43452m)
 
 # Crear el objeto GeoJSON para la capa de buff3_4psf_24140m
-buff3_4psf_24140m_layer_geojson <- geojsonio::geojson_json(buff3_4psf_24140m)
+buff3_4psf_24140m_geojson <- geojsonio::geojson_json(buff3_4psf_24140m)
 
 # Crear el objeto GeoJSON para la capa de buff3_6psf_16093m
-buff3_6psf_16093m_layer_geojson <- geojsonio::geojson_json(buff3_6psf_16093m)
+buff3_6psf_16093m_geojson <- geojsonio::geojson_json(buff3_6psf_16093m)
 
 # === MÓDULO BUFFERS RIESGO - FIN ===
 
@@ -168,6 +176,7 @@ addResourcePath("gallery_photos", "fotos_conanp")
 n_playa <- nrow(playa_bagdad)
 n_lagm <- nrow(lag_madre)
 n_puntos <- nrow(puntos)
+n_complejo_starbase <- nrow(complejo_starbase)
 
 # Carga diferida de datos pesados - se cargarán solo cuando se necesiten
 # load("datos/multas_sanciones.RData")  # 14MB - se cargará cuando se necesite

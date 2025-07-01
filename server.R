@@ -108,6 +108,13 @@ server <- function(input, output, session) {
     shinyjs::runjs(sprintf("toggleDvLayer(%s);", tolower(input$show_dv_layer_gmap)))
   }, ignoreNULL = FALSE)
   
+  # Observer para la capa complejo_starbase en Google Maps
+  observeEvent(input$show_complejo_starbase_gmap, {
+    # Llama a la función de JS para mostrar/ocultar la capa
+    shinyjs::runjs(sprintf("togglecomplejo_starbase(%s);", tolower(input$show_complejo_starbase_gmap)))
+  }, ignoreNULL = FALSE)
+  
+  
   # Observer para la capa aicas en Google Maps
   observeEvent(input$show_aicas, {
     # Llama a la función de JS para mostrar/ocultar la capa
@@ -295,6 +302,16 @@ server <- function(input, output, session) {
                    weight = 1, color = "black", opacity = 1, group = "Laguna madre")
       } else .}
   })
+
+  # Observer para Laguna Madre
+  observeEvent(input$complejo_starbase, {
+    leafletProxy("mapa") %>%
+      clearGroup("Complejo Starbase") %>%
+      {if(input$lag_madre) {
+        addPolygons(., data = lag_madre, 
+                    weight = 1, color = "black", opacity = 1, group = "Complejo Starbase")
+      } else .}
+  }) 
   
   # Observer para Municipios
   observeEvent(input$municipios, {
