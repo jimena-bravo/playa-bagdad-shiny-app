@@ -111,10 +111,10 @@ function initMap() {
       aicasdLayer = new google.maps.Data();
       aicasdLayer.addGeoJson(aicasData);
       aicasdLayer.setStyle({
-        fillColor: '#0077b6', // Un azul distintivo
+        fillColor: '#FF6B6B', // Rojo coral para AICAS
         strokeWeight: 1.5,
-        strokeColor: '#48494b',
-        fillOpacity: 0.4
+        strokeColor: '#E74C3C',
+        fillOpacity: 0.5
       });
     }
   } catch (e) {
@@ -231,25 +231,6 @@ function initMap() {
   } 
 }
 
-           // Cargar y configurar la capa de buff1_300F_50m
-  try {
-    const geojsonScript = document.getElementById('buff1_300F_50m_layer_geojson');
-    if (geojsonScript && geojsonScript.textContent) {
-      const buff1_300F_50mData = JSON.parse(geojsonScript.textContent);
-      buff1_300F_50mLayer = new google.maps.Data();
-      buff1_300F_50mLayer.addGeoJson(buff1_300F_50mData);
-      buff1_300F_50mLayer.setStyle({
-        fillColor: '#dc140a', // Un rojo distintivo
-        strokeWeight: 1.5,
-        strokeColor: '#48494b',
-        fillOpacity: 0.4
-      });
-    }
-  } catch (e) {
-    console.error("Error al cargar o procesar la capa GeoJSON de Columna de calor (150°C - 0.05 km):", e);
-  } 
-}
-
 // Cargar y configurar la capa de Uso de Suelo y Vegetación
 try {
   const geojsonScript = document.getElementById('uso_suelo_mat_layer_geojson');
@@ -278,6 +259,25 @@ try {
   }
 } catch (e) {
   console.error("Error al cargar o procesar la capa GeoJSON de Uso de Suelo y Vegetación:", e);
+}
+
+           // Cargar y configurar la capa de buff1_300F_50m
+  try {
+    const geojsonScript = document.getElementById('buff1_300F_50m_layer_geojson');
+    if (geojsonScript && geojsonScript.textContent) {
+      const buff1_300F_50mData = JSON.parse(geojsonScript.textContent);
+      buff1_300F_50mLayer = new google.maps.Data();
+      buff1_300F_50mLayer.addGeoJson(buff1_300F_50mData);
+      buff1_300F_50mLayer.setStyle({
+        fillColor: '#dc140a', // Un rojo distintivo
+        strokeWeight: 1.5,
+        strokeColor: '#48494b',
+        fillOpacity: 0.4
+      });
+    }
+  } catch (e) {
+    console.error("Error al cargar o procesar la capa GeoJSON de Columna de calor (150°C - 0.05 km):", e);
+  } 
 }
 
            // Cargar y configurar la capa de buff1_212F_482m

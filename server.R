@@ -114,6 +114,7 @@ server <- function(input, output, session) {
     shinyjs::runjs(sprintf("toggleaicasLayer(%s);", tolower(input$show_aicas)))
   }, ignoreNULL = FALSE)
   
+  
   # Observer para la capa sistema arrecifal en Google Maps
   observeEvent(input$show_sist_arrecifal, {
     # Llama a la función de JS para mostrar/ocultar la capa
@@ -421,7 +422,12 @@ server <- function(input, output, session) {
       clearGroup("Áreas de Importancia para la Conservación de las Aves") %>%
       {if(input$aicas) {
         addPolygons(., data = aicas, 
-                    weight = 1, color = "black", opacity = 1, group = "Áreas de Importancia para la Conservación de las Aves")
+                    weight = 2, 
+                    color = "#000000", 
+                    fillColor = "#dbe511",
+                    fillOpacity = 0.6, 
+                    opacity = 0.8, 
+                    group = "Áreas de Importancia para la Conservación de las Aves")
       } else .}
   }) 
 
@@ -436,7 +442,12 @@ server <- function(input, output, session) {
       clearGroup("Sistema Arrecifal Artificial") %>%
       {if(input$sistema_arrecifal_tamaulipas) {
         addPolygons(., data = sistema_arrecifal_tamaulipas, 
-                    weight = 1, color = "black", opacity = 1, group = "Sistema Arrecifal Artificial")
+                    weight = 2, 
+                    color = "#000000", 
+                    fillColor = "#d111e5",
+                    fillOpacity = 0.6, 
+                    opacity = 0.8, 
+                    group = "Sistema Arrecifal Artificial")
       } else .}
   }) 
   
@@ -451,7 +462,12 @@ server <- function(input, output, session) {
       clearGroup("Regiones Terrestres Prioritarias") %>%
       {if(input$rtp) {
         addPolygons(., data = rtp, 
-                    weight = 1, color = "black", opacity = 1, group = "Regiones Terrestres Prioritarias")
+                    weight = 2, 
+                    color = "#000000", 
+                    fillColor = "#27AE60",
+                    fillOpacity = 0.6, 
+                    opacity = 0.8, 
+                    group = "Regiones Terrestres Prioritarias")
       } else .}
   }) 
   
@@ -466,7 +482,12 @@ server <- function(input, output, session) {
       clearGroup("Regiones Marinas Prioritarias") %>%
       {if(input$rmp) {
         addPolygons(., data = rmp, 
-                    weight = 1, color = "black", opacity = 1, group = "Regiones Marinas Prioritarias")
+                    weight = 2, 
+                    color = "#000000", 
+                    fillColor = "#2980B9",
+                    fillOpacity = 0.6, 
+                    opacity = 0.8, 
+                    group = "Regiones Marinas Prioritarias")
       } else .}
   }) 
 
@@ -481,7 +502,12 @@ server <- function(input, output, session) {
       clearGroup("Sitio Ramsar Laguna Madre") %>%
       {if(input$lm_ramsar) {
         addPolygons(., data = lm_ramsar,
-                    weight = 1, color = "black", opacity = 1, group = "Sitio Ramsar Laguna Madre")
+                    weight = 2, 
+                    color = "#000000", 
+                    fillColor = "#17A589",
+                    fillOpacity = 0.6, 
+                    opacity = 0.8, 
+                    group = "Sitio Ramsar Laguna Madre")
       } else .}
   })
 
@@ -497,7 +523,12 @@ server <- function(input, output, session) {
       clearGroup("Sitio Ramsar Rancho Nuevo") %>%
       {if(input$rn_ramsar) {
         addPolygons(., data = rn_ramsar,
-                    weight = 1, color = "black", opacity = 1, group = "Sitio Ramsar Rancho Nuevo")
+                    weight = 2, 
+                    color = "#000000", 
+                    fillColor = "#045691",
+                    fillOpacity = 0.6, 
+                    opacity = 0.8, 
+                    group = "Sitio Ramsar Rancho Nuevo")
       } else .}
   })
   
@@ -507,14 +538,57 @@ server <- function(input, output, session) {
       hidro_tam_nl_coa <<- load_heavy_data("hidro_tam_nl_coa")
       n_hidro_tam_nl_coa <<- nrow(hidro_tam_nl_coa)
     }
+
+  leafletProxy("mapa") %>%
+    clearGroup("Hidrología") %>%
+    {if(input$hidro_tam_nl_coa) {
+      addPolylines(., data = hidro_tam_nl_coa,
+                   weight = 3, 
+                   color = "#19e2cd", 
+                   opacity = 0.8, 
+                   group = "Hidrología")
+    } else .}
+  })
+  
+  # Observer para Uso de Suelo y Vegetación
+  observeEvent(input$uso_suelo_mat, {
+    if(input$uso_suelo_mat && is.null(uso_suelo_mat)) {
+      uso_suelo_mat <<- load_heavy_data("uso_suelo_mat")
+      n_uso_suelo_mat <<- nrow(uso_suelo_mat)
+    }
     
     leafletProxy("mapa") %>%
-      clearGroup("Sitio Ramsar Rancho Nuevo") %>%
-      {if(input$hidro_tam_nl_coa) {
-        addPolygons(., data = hidro_tam_nl_coa,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+      clearGroup("Uso de Suelo y Vegetación") %>%
+      {if(input$uso_suelo_mat) {
+        # Crear paleta de colores para las descripciones
+        colores_uso_suelo <- colorFactor(
+          palette = c(
+            "#E74C3C", "#3498DB", "#2ECC71", "#F1C40F", "#9B59B6",
+            "#E67E22", "#1ABC9C", "#34495E", "#E91E63", "#00BCD4",
+            "#4CAF50", "#FF9800", "#795548", "#607D8B", "#9C27B0",
+            "#FF5722", "#3F51B5", "#009688", "#FFC107", "#8BC34A",
+            "#FFEB3B", "#03A9F4", "#FF5722", "#673AB7", "#00BCD4",
+            "#4CAF50", "#FF9800", "#795548", "#607D8B", "#9C27B0",
+            "#FF5722", "#3F51B5", "#009688"
+          ),
+          domain = uso_suelo_mat$DESCRIPCIO
+        )
+        
+        addPolygons(., data = uso_suelo_mat,
+                    weight = 1, 
+                    color = "#000000", 
+                    fillColor = ~colores_uso_suelo(DESCRIPCIO),
+                    fillOpacity = 0.5, 
+                    opacity = 0.9, 
+                    group = "Uso de Suelo y Vegetación",
+                    label = ~paste("Clase:", DESCRIPCIO),
+                    labelOptions = labelOptions(
+                      style = list("font-weight" = "bold", "color" = "black"),
+                      textsize = "12px",
+                      direction = "auto"
+                    ))
       } else .}
-  }) 
+  })
   
   # Observer para buff1_300F_50m
   observeEvent(input$buff1_300F_50m, {
@@ -527,7 +601,12 @@ server <- function(input, output, session) {
       clearGroup("Columna de calor (150°C - 0.05 km)") %>%
       {if(input$buff1_300F_50m) {
         addPolygons(., data = buff1_300F_50m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#dc140a", 
+                    fillColor = "#dc140a",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8, 
+                    group = "Columna de calor (150°C - 0.05 km)") 
       } else .}
   }) 
   
@@ -542,7 +621,12 @@ server <- function(input, output, session) {
       clearGroup("Columna de calor (100°C - 0.482 km") %>%
       {if(input$buff1_212F_482m) {
         addPolygons(., data = buff1_212F_482m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#ee9606", 
+                    fillColor = "#ee9606",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8, 
+                    group = "Columna de calor (150°C - 0.05 km)")
       } else .}
   }) 
   
@@ -557,7 +641,12 @@ server <- function(input, output, session) {
       clearGroup("Columna de calor (32.22°C - 0.965 km)") %>%
       {if(input$buff1_90F_965m) {
         addPolygons(., data = buff1_90F_965m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#f3e61e", 
+                    fillColor = "#f3e61e",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8, 
+                    group = "Columna de calor (32.22°C - 0.965 km)")
       } else .}
   }) 
   
@@ -572,7 +661,12 @@ server <- function(input, output, session) {
       clearGroup("Contorno de ruido (140 dB - 0.804 km)") %>%
       {if(input$buff2_140db_804m) {
         addPolygons(., data = buff2_140db_804m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#dc140a", 
+                    fillColor = "#dc140a",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8, 
+                    group = "Contorno de ruido (140 dB - 0.804 km)")
       } else .}
   }) 
   
@@ -587,7 +681,12 @@ server <- function(input, output, session) {
       clearGroup("Contorno de ruido (130 dB - 5.47 km)") %>%
       {if(input$buff2_130db_5471m) {
         addPolygons(., data = buff2_130db_5471m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#ee9606", 
+                    fillColor = "#ee9606",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8,
+                    group = "Contorno de ruido (130 dB - 5.47 km)")
       } else .}
   }) 
   
@@ -602,7 +701,12 @@ server <- function(input, output, session) {
       clearGroup("Contorno de ruido (120 dB - 15.29 km)") %>%
       {if(input$buff2_120db_15288m) {
         addPolygons(., data = buff2_120db_15288m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#f3e61e", 
+                    fillColor = "#f3e61e",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8, 
+                    group = "Contorno de ruido (120 dB - 15.29 km)")
       } else .}
   }) 
   
@@ -617,7 +721,12 @@ server <- function(input, output, session) {
       clearGroup("Contorno de ruido (111 dB - 36.21 km)") %>%
       {if(input$buff2_111db_36210m) {
         addPolygons(., data = buff2_111db_36210m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#73df78", 
+                    fillColor = "#73df78",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8, 
+                    weight = 1, color = "black", opacity = 1, group = "Contorno de ruido (111 dB - 36.21 km)")
       } else .}
   }) 
 
@@ -632,7 +741,12 @@ server <- function(input, output, session) {
       clearGroup("Explosiones sónicas (6 psf - 16.09 km)") %>%
       {if(input$buff3_6psf_16093m) {
         addPolygons(., data = buff3_6psf_16093m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#dc140a", 
+                    fillColor = "#dc140a",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8, 
+                    group = "Explosiones sónicas (6 psf - 16.09 km)")
       } else .}
   }) 
   
@@ -647,7 +761,12 @@ server <- function(input, output, session) {
       clearGroup("Explosiones sónicas (4 psf - 24.14 km)") %>%
       {if(input$buff3_4psf_24140m) {
         addPolygons(., data = buff3_4psf_24140m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#ee9606", 
+                    fillColor = "#ee9606",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8,
+                    group = "Explosiones sónicas (4 psf - 24.14 km)")
       } else .}
   }) 
   
@@ -662,7 +781,12 @@ server <- function(input, output, session) {
       clearGroup("Explosiones sónicas (2 psf - 43.45 km)") %>%
       {if(input$buff3_2psf_43452m) {
         addPolygons(., data = buff3_2psf_43452m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#f3e61e", 
+                    fillColor = "#f3e61e",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8, 
+                    group = "Explosiones sónicas (2 psf - 43.45 km)")
       } else .}
   }) 
   
@@ -677,7 +801,12 @@ server <- function(input, output, session) {
       clearGroup("Explosiones sónicas (1 psf - 45.06 km)") %>%
       {if(input$buff3_1psff_45061m) {
         addPolygons(., data = buff3_1psff_45061m,
-                    weight = 1, color = "black", opacity = 1, group = "Hidrología")
+                    weight = 2, 
+                    color = "#73df78", 
+                    fillColor = "#73df78",
+                    fillOpacity = 0.4, 
+                    opacity = 0.8, 
+                    group = "Explosiones sónicas (1 psf - 45.06 km)")
       } else .}
   }) 
   

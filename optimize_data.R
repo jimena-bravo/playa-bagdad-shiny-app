@@ -55,14 +55,7 @@ optimize_spatial_data <- function(file_path, output_path = NULL, tolerance = 0.0
 
 # Lista de archivos a optimizar
 files_to_optimize <- c(
-  "datos/municipios.RData",
-  "datos/ageb_rural.RData", 
-  "datos/ageb_urbano.RData",
-  "datos/localidad_amanzanada.RData",
-  "datos/localidad_puntual.RData",
-  "datos/manzana.RData",
-  "datos/vialidad.RData",
-  "datos/shapes_mexico.RData"
+  "datos/Ambiental/uso_suelo_mat.RData"
 )
 
 # Optimizar cada archivo
